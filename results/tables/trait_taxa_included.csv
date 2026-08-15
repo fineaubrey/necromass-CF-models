@@ -1,0 +1,752 @@
+kingdom,trait,subset,rank,taxon,n,threshold_rule,included
+Bacteria,MurA,all,Phylum,Acidobacteriota,3,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Actinomycetota,139,n > 50,TRUE
+Bacteria,MurA,all,Phylum,Bacilliota,3,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Bacteroidota,5,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Chlamydiota,2,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Cyanobacteriota,7,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Firmicutes,122,n > 50,TRUE
+Bacteria,MurA,all,Phylum,Myxococcota,1,n > 50,FALSE
+Bacteria,MurA,all,Phylum,Pseudomonadota,161,n > 50,TRUE
+Bacteria,MurA,all,Phylum,Verrucomicrobiota,1,n > 50,FALSE
+Bacteria,MurA,all,Class,Acidobacteriia,2,n > 20,FALSE
+Bacteria,MurA,all,Class,Actinomycetia,138,n > 20,TRUE
+Bacteria,MurA,all,Class,Alphaproteobacteria,7,n > 20,FALSE
+Bacteria,MurA,all,Class,Bacilli,109,n > 20,TRUE
+Bacteria,MurA,all,Class,Bacteroidia,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Betaproteobacteria,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Chlamydiia,2,n > 20,FALSE
+Bacteria,MurA,all,Class,Clostridia,16,n > 20,FALSE
+Bacteria,MurA,all,Class,Cyanophyceae,7,n > 20,FALSE
+Bacteria,MurA,all,Class,Cytophagia,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Epsilonproteobacteria,3,n > 20,FALSE
+Bacteria,MurA,all,Class,Flavobacteriia,3,n > 20,FALSE
+Bacteria,MurA,all,Class,Gammaproteobacteria,150,n > 20,TRUE
+Bacteria,MurA,all,Class,Polyangia,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Solibacteres,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Thermoleophilia,1,n > 20,FALSE
+Bacteria,MurA,all,Class,Verrucomicrobiae,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Acidobacteriales,2,n > 20,FALSE
+Bacteria,MurA,all,Order,Actinomycetales,7,n > 20,FALSE
+Bacteria,MurA,all,Order,Actinopolysporales,2,n > 20,FALSE
+Bacteria,MurA,all,Order,Aeromonadales,3,n > 20,FALSE
+Bacteria,MurA,all,Order,Bacillales,74,n > 20,TRUE
+Bacteria,MurA,all,Order,Bacteroidales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Bifidobacteriales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Campylobacterales,3,n > 20,FALSE
+Bacteria,MurA,all,Order,Caryophanales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Chlamydiales,2,n > 20,FALSE
+Bacteria,MurA,all,Order,Chthoniobacterales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Clostridiales,15,n > 20,FALSE
+Bacteria,MurA,all,Order,Corynebacteriales,17,n > 20,FALSE
+Bacteria,MurA,all,Order,Cytophagales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Enterobacterales,59,n > 20,TRUE
+Bacteria,MurA,all,Order,Flavobacteriales,3,n > 20,FALSE
+Bacteria,MurA,all,Order,Frankiales,12,n > 20,FALSE
+Bacteria,MurA,all,Order,Hyphomicrobiales,2,n > 20,FALSE
+Bacteria,MurA,all,Order,Lachnospirales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Lactobacillales,33,n > 20,TRUE
+Bacteria,MurA,all,Order,Legionellales,26,n > 20,TRUE
+Bacteria,MurA,all,Order,Micrococcales,62,n > 20,TRUE
+Bacteria,MurA,all,Order,Mycobacteriales,18,n > 20,FALSE
+Bacteria,MurA,all,Order,Neisseriales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Oscillatoriales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Paenibacillales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Polyangiales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Propionibacteriales,6,n > 20,FALSE
+Bacteria,MurA,all,Order,Pseudomonadales,38,n > 20,TRUE
+Bacteria,MurA,all,Order,Rhizobiales,4,n > 20,FALSE
+Bacteria,MurA,all,Order,Rickettsiales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Solibacterales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Solirubrobacterales,1,n > 20,FALSE
+Bacteria,MurA,all,Order,Streptomycetales,13,n > 20,FALSE
+Bacteria,MurA,all,Order,Synechococcales,6,n > 20,FALSE
+Bacteria,MurA,all,Order,Vibrionales,24,n > 20,TRUE
+Bacteria,MurA,all,Genus,Actinomyces,6,n > 10,FALSE
+Bacteria,MurA,all,Genus,Actinopolyspora,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Aerobacter,4,n > 10,FALSE
+Bacteria,MurA,all,Genus,Aerococcus,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Aeromonas,3,n > 10,FALSE
+Bacteria,MurA,all,Genus,Agromyces,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Arthrobacter,18,n > 10,TRUE
+Bacteria,MurA,all,Genus,Azobacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Bacillus,50,n > 10,TRUE
+Bacteria,MurA,all,Genus,Bacteroides,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Bifidobacterium,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Bradyrhizobium,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Brevibacterium,3,n > 10,FALSE
+Bacteria,MurA,all,Genus,Butyribacterium,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Campylobacter,3,n > 10,FALSE
+Bacteria,MurA,all,Genus,Chelativorans,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Chlamydia,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Chthoniobacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Clostridium,13,n > 10,TRUE
+Bacteria,MurA,all,Genus,Corynebacterium,17,n > 10,TRUE
+Bacteria,MurA,all,Genus,Coxiella,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Enterobacter,12,n > 10,TRUE
+Bacteria,MurA,all,Genus,Escherichia,16,n > 10,TRUE
+Bacteria,MurA,all,Genus,Flavobacterium,3,n > 10,FALSE
+Bacteria,MurA,all,Genus,Fluoribacter,6,n > 10,FALSE
+Bacteria,MurA,all,Genus,Frankia,12,n > 10,TRUE
+Bacteria,MurA,all,Genus,Gaffkya,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Hyphomicrobium,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Klebsiella,5,n > 10,FALSE
+Bacteria,MurA,all,Genus,Koribacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Labilithrix,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Lactobacillus,5,n > 10,FALSE
+Bacteria,MurA,all,Genus,Legionella,19,n > 10,TRUE
+Bacteria,MurA,all,Genus,Leuconostoc,3,n > 10,FALSE
+Bacteria,MurA,all,Genus,Micrococcus,38,n > 10,TRUE
+Bacteria,MurA,all,Genus,Mycobacterium,16,n > 10,TRUE
+Bacteria,MurA,all,Genus,Neisseria,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Neorhizobium,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Nocardia,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Paenibacillus,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Planococcus,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Propionibacterium,6,n > 10,FALSE
+Bacteria,MurA,all,Genus,Proteus,6,n > 10,FALSE
+Bacteria,MurA,all,Genus,Pseudarthrobacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Pseudomonas,37,n > 10,TRUE
+Bacteria,MurA,all,Genus,Rhodococcus,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Rickettsia,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Salmonella,4,n > 10,FALSE
+Bacteria,MurA,all,Genus,Sarcina,2,n > 10,FALSE
+Bacteria,MurA,all,Genus,Serratia,4,n > 10,FALSE
+Bacteria,MurA,all,Genus,Shigella,5,n > 10,FALSE
+Bacteria,MurA,all,Genus,Solibacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Solirubrobacter,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Spirosoma,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Sporosarcina,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Staphylococcus,22,n > 10,TRUE
+Bacteria,MurA,all,Genus,Streptococcus,23,n > 10,TRUE
+Bacteria,MurA,all,Genus,Streptomyces,13,n > 10,TRUE
+Bacteria,MurA,all,Genus,Streptosporangium,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Synechococcus,6,n > 10,FALSE
+Bacteria,MurA,all,Genus,Terriglobus,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Trichodesmium,1,n > 10,FALSE
+Bacteria,MurA,all,Genus,Vibrio,24,n > 10,TRUE
+Bacteria,MurA,all,Genus,Yersinia,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Actinomyces humiferus,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Actinomyces odontolyticus,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Actinomyces viscosus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Actinopolyspora halophila,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Aerobacter aerogenes,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Aerobacter cloacae,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Aerococcus viridans,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Aeromonas salmonicida,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Agromyces ramosus,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter aurescens,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter citreus,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter globiformis,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter histidinolovorans,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter sp. AT25,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter sp. ATCC 19141,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter sp. NCIB 9423,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter tecti,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Arthrobacter ureafaciens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Azobacter vinelandii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus alvei,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus cereus,9,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus globigii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus megaterium,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus pasteurii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus polymyxa,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus psychrophilus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus stearothermophilus,6,n > 10,FALSE
+Bacteria,MurA,all,Species,Bacillus subtilis,21,n > 10,TRUE
+Bacteria,MurA,all,Species,Bacteroides gingivalis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bifidobacterium infantis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Bradyrhizobium japonicum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Brevibacterium helvolum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Brevibacterium linens,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Butyribacterium rettgeri,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Campylobacter coli,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Campylobacter fetus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Campylobacter jejuni,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Chelativorans multitrophicus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Chlamydia trachomatis,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Chthoniobacter flavus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium bifermentans,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium botulinum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium histolyticum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium perfringens,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium septicum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium sporogenes,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridium welchii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Clostridum perfringens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium anaerobicum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium betae,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium fermentans,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium ilicis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium insidiosum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium poinsettiae,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium rathayi,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium sp. ATCC21188,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Corynebacterium tritici,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Coxiella burnetii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Enterobacter aerogenes,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Enterobacter agglomerans,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Enterobacter cloacae,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Escherichia coli,16,n > 10,TRUE
+Bacteria,MurA,all,Species,Flavobacterium meningosepticum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Flavobacterium miningosepticum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Fluoribacter sp.,6,n > 10,FALSE
+Bacteria,MurA,all,Species,Frankia sp.,12,n > 10,TRUE
+Bacteria,MurA,all,Species,Gaffkya homari,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Hyphomicrobium neptunium,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Hyphomicrobium sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Klebsiella pneumoniae,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Koribacter versatilis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Labilithrix luteola,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Lactobacillus (Bifidobacterium) bifidus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Lactobacillus acidophilus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Lactobacillus bifidus var pennsylvanicus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Lactobacillus brevis,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Legionella micdadei,8,n > 10,FALSE
+Bacteria,MurA,all,Species,Legionella pneumophila,11,n > 10,TRUE
+Bacteria,MurA,all,Species,Leuconostoc citrovorum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Leuconostoc mesenteroides,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Microbacterium lacticum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus aurantiacus,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus citreus,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus falvus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus freudenreichii,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus freudreichii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus luteus,14,n > 10,TRUE
+Bacteria,MurA,all,Species,Micrococcus lysodeikticus,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus radiodurans,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus roseus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Micrococcus varians,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium avium,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium kansasii,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium phlei,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium segmatis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium smegmatis,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium sp.,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium sp. NRRL MB,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium sp. strain 521,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium sp. strain rabinowitch,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Mycobacterium tuberculosis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Neisseria gonorrhoeae,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Neorhizobium sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Nocardia kirovani,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Paenibacillus alginolyticus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Planococcus sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Propionibacterium acnes,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Propionibacterium peterssonii,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Propionibacterium rubrum,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Propionibacterium technicum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Proteus vulgaris,6,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudarthrobacter oxydans,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas aeruginosa,7,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas aeruginosa (mutant),1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas aureofaciens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas cepacia,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas chlororaphis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas denitrificans,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas fluorescence,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas fluorescens,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas fragi,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas mucidolens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas ovalis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas putida,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas sp.,9,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas stutzeri,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas syncyanea,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas synxantha,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Pseudomonas taetrolens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Rhodococcus sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Rickettsia mooseri,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Salmonella bethesda,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Salmonella choleraesuis,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Salmonella gallinarum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Sarcina lutea,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Serratia marcescens,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Shigella flexneri,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Shigella sonnei,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Solibacter usitatus,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Solirubrobacter soli,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Spirosoma spitsbergense,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Sporosarcina ureae,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Staphylococcus aureus,11,n > 10,TRUE
+Bacteria,MurA,all,Species,Staphylococcus cocci,10,n > 10,FALSE
+Bacteria,MurA,all,Species,Staphylococcus epidermidis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus cremoris,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus faecalis,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus faecalis var. liquefaciens,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus faecium var. durans (thr),1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus faecium var. durans (val),1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus mutans,12,n > 10,TRUE
+Bacteria,MurA,all,Species,Streptococcus pyogenes,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptococcus sp.,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces,4,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces albus G,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces coelicolor Aa,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces griseoviridis,2,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces sp.,3,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces sp. K27,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptomyces sp. R61,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Streptosporangium roseum,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Synechococcus bacillaris,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Synechococcus sp.,5,n > 10,FALSE
+Bacteria,MurA,all,Species,Terriglobus roseus KBS63,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Trichodesmium sp.,1,n > 10,FALSE
+Bacteria,MurA,all,Species,Vibrio fetus intestinalis,12,n > 10,TRUE
+Bacteria,MurA,all,Species,Vibrio fetus veneralis,12,n > 10,TRUE
+Bacteria,MurA,all,Species,Yersinia ruckeri,3,n > 10,FALSE
+Fungi,GlcN,all,Phylum,Ascomycota,546,n > 50,TRUE
+Fungi,GlcN,all,Phylum,Basidiomycota,192,n > 50,TRUE
+Fungi,GlcN,all,Phylum,Glomeromycota,7,n > 50,FALSE
+Fungi,GlcN,all,Phylum,Mucoromycota,34,n > 50,FALSE
+Fungi,GlcN,all,Phylum,Zygomycota,2,n > 50,FALSE
+Fungi,GlcN,all,Class,Agaricomycetes,189,n > 20,TRUE
+Fungi,GlcN,all,Class,Ascomycetes,1,n > 20,FALSE
+Fungi,GlcN,all,Class,Dothideomycetes,50,n > 20,TRUE
+Fungi,GlcN,all,Class,Euascomycetes,1,n > 20,FALSE
+Fungi,GlcN,all,Class,Eurotiomycetes,150,n > 20,TRUE
+Fungi,GlcN,all,Class,Glomeromycetes,7,n > 20,FALSE
+Fungi,GlcN,all,Class,Leotiomycetes,47,n > 20,TRUE
+Fungi,GlcN,all,Class,Mortierellomycotina,2,n > 20,FALSE
+Fungi,GlcN,all,Class,Mucoromycetes,32,n > 20,TRUE
+Fungi,GlcN,all,Class,Orbiliomycetes,12,n > 20,FALSE
+Fungi,GlcN,all,Class,Pezizomycetes,17,n > 20,FALSE
+Fungi,GlcN,all,Class,Pichiomycetes,15,n > 20,FALSE
+Fungi,GlcN,all,Class,Saccharomycetes,57,n > 20,TRUE
+Fungi,GlcN,all,Class,Schizosaccharomycetes,2,n > 20,FALSE
+Fungi,GlcN,all,Class,Sordariomycetes,192,n > 20,TRUE
+Fungi,GlcN,all,Class,Taphrinomycetes,2,n > 20,FALSE
+Fungi,GlcN,all,Class,Tremellomycetes,3,n > 20,FALSE
+Fungi,GlcN,all,Class,Umbelopsidomycetes,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Agaricales,94,n > 20,TRUE
+Fungi,GlcN,all,Order,Auriculariales,5,n > 20,FALSE
+Fungi,GlcN,all,Order,Boletales,40,n > 20,TRUE
+Fungi,GlcN,all,Order,Boliniales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Botryosphaeriales,3,n > 20,FALSE
+Fungi,GlcN,all,Order,Cantharellales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Capnodiales,4,n > 20,FALSE
+Fungi,GlcN,all,Order,Chaetosphaeriales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Chaetothyriales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Coniochaetales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Diversisporales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Dothideales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Erysiphales,4,n > 20,FALSE
+Fungi,GlcN,all,Order,Eurotiales,103,n > 20,TRUE
+Fungi,GlcN,all,Order,Geastrales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Gloeophyllales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Glomerales,6,n > 20,FALSE
+Fungi,GlcN,all,Order,Glomerellales,24,n > 20,TRUE
+Fungi,GlcN,all,Order,Gomphales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Heliotales,43,n > 20,TRUE
+Fungi,GlcN,all,Order,Hymenochaetales,4,n > 20,FALSE
+Fungi,GlcN,all,Order,Hypocreales,81,n > 20,TRUE
+Fungi,GlcN,all,Order,Leotiomycetes incertae sedis,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Magnaporthales,5,n > 20,FALSE
+Fungi,GlcN,all,Order,Melotiales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Microascales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Mortierellales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Mucorales,32,n > 20,TRUE
+Fungi,GlcN,all,Order,Onygenales,45,n > 20,TRUE
+Fungi,GlcN,all,Order,Ophiostomatales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Orbiliales,12,n > 20,FALSE
+Fungi,GlcN,all,Order,Pezizales,17,n > 20,FALSE
+Fungi,GlcN,all,Order,Pleosporales,42,n > 20,TRUE
+Fungi,GlcN,all,Order,Polyporales,25,n > 20,TRUE
+Fungi,GlcN,all,Order,Russulales,16,n > 20,FALSE
+Fungi,GlcN,all,Order,Saccharomycetales,58,n > 20,TRUE
+Fungi,GlcN,all,Order,Schizosaccharomycetales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Serinales,15,n > 20,FALSE
+Fungi,GlcN,all,Order,Sordariales,74,n > 20,TRUE
+Fungi,GlcN,all,Order,Taphrinales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Tremellales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Trichosporonales,1,n > 20,FALSE
+Fungi,GlcN,all,Order,Umbelopsidales,2,n > 20,FALSE
+Fungi,GlcN,all,Order,Xylariales,1,n > 20,FALSE
+Fungi,GlcN,all,Genus,Acaulospora,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Aegerita,7,n > 10,FALSE
+Fungi,GlcN,all,Genus,Agaricus,11,n > 10,TRUE
+Fungi,GlcN,all,Genus,Alpova,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Alternaria,18,n > 10,TRUE
+Fungi,GlcN,all,Genus,Amanita,6,n > 10,FALSE
+Fungi,GlcN,all,Genus,Armillaria,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Ascochyta,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Aspergillus,69,n > 10,TRUE
+Fungi,GlcN,all,Genus,Astraeus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Aureobasidium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Auricularia,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Beauveria,9,n > 10,FALSE
+Fungi,GlcN,all,Genus,Bionectria,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Bjerkandera,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Blastobotrys,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Blastomyces,14,n > 10,TRUE
+Fungi,GlcN,all,Genus,Boletus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Boliniaceae,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Botrytis,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Buergenerula,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Cadophora,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Candida,15,n > 10,TRUE
+Fungi,GlcN,all,Genus,Cephalosporium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Cephalotrichum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Chaetosphaeriaceae,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Choanephora,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Cladosporium,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Coccidioides,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Colletotrichum,16,n > 10,TRUE
+Fungi,GlcN,all,Genus,Coniochaeta,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Coriolus,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Craterellus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Crinipellis,8,n > 10,FALSE
+Fungi,GlcN,all,Genus,Dactylium,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Didymella,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Doratomyces,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Epicoccum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Epidermophyton,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Erysiphe,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Eurotium,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Exophiala,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Flammulina,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Fusarium,47,n > 10,TRUE
+Fungi,GlcN,all,Genus,Fusicoccum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Ganoderma,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Geastrum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Geomyces,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Geotrichum,17,n > 10,TRUE
+Fungi,GlcN,all,Genus,Gibberella,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Gibellulopsis,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Gloeophyllum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Glomerella,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Glomus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Grifola,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Gyrodon,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Hansenula,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Hebeloma,29,n > 10,TRUE
+Fungi,GlcN,all,Genus,Helicodendron,31,n > 10,TRUE
+Fungi,GlcN,all,Genus,Helicoon,9,n > 10,FALSE
+Fungi,GlcN,all,Genus,Helminthosporium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Helmintosporium,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Hendersonula,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Hericium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Heydenia,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Hirschioporus,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Histoplasma,15,n > 10,TRUE
+Fungi,GlcN,all,Genus,Hypsizygus,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Laccaria,7,n > 10,FALSE
+Fungi,GlcN,all,Genus,Lactarius,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Lentinula,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Leptosphaeria,6,n > 10,FALSE
+Fungi,GlcN,all,Genus,Melotiales,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Metarhizium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Microdochium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Microsporum,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Monascus,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Morchella,14,n > 10,TRUE
+Fungi,GlcN,all,Genus,Mortierella,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Mucor,10,n > 10,FALSE
+Fungi,GlcN,all,Genus,Mycena,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Mycosphaerella,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Neurospora,72,n > 10,TRUE
+Fungi,GlcN,all,Genus,Oidiodendron,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Oligoporus,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Oospora,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Paecilomyces,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Paracoccidioides,6,n > 10,FALSE
+Fungi,GlcN,all,Genus,Paxillus,7,n > 10,FALSE
+Fungi,GlcN,all,Genus,Penicillium,16,n > 10,TRUE
+Fungi,GlcN,all,Genus,Penillium,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Periconia,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Peziza,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Phaeosphaeria,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Phanerochaete,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Phialocephala,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Phialophora,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Pichia,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Picnoporus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Pisolithus,17,n > 10,TRUE
+Fungi,GlcN,all,Genus,Pleurotus,8,n > 10,FALSE
+Fungi,GlcN,all,Genus,Poria,5,n > 10,FALSE
+Fungi,GlcN,all,Genus,Psilocybe,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Pycnostysanus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Pyrenochaeta,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Ramaria,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Rhizoglomus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Rhizophagus,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Rhizopus,19,n > 10,TRUE
+Fungi,GlcN,all,Genus,Rhynchosporium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Russula,13,n > 10,TRUE
+Fungi,GlcN,all,Genus,Saccharomyces,34,n > 10,TRUE
+Fungi,GlcN,all,Genus,Schizophyllum,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Schizosaccharomyces,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Schwanniomyces,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Sclerotium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Sordaria,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Sphaerostilbe,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Sphaerotheca,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Sporotrichum,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Stachybotrrys,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Suillus,8,n > 10,FALSE
+Fungi,GlcN,all,Genus,Talaromyces,6,n > 10,FALSE
+Fungi,GlcN,all,Genus,Taphrina,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Tetracladium,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Thamnidium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Thermoascus,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Torulopsis,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Trametes,3,n > 10,FALSE
+Fungi,GlcN,all,Genus,Tremella,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Trichocladium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Trichoderma,12,n > 10,TRUE
+Fungi,GlcN,all,Genus,Trichophyton,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Trichosporon,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Tuber,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Ulocladium,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Umbelopsis,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Verticillium,4,n > 10,FALSE
+Fungi,GlcN,all,Genus,Volvariella,2,n > 10,FALSE
+Fungi,GlcN,all,Genus,Zygorhynchus,1,n > 10,FALSE
+Fungi,GlcN,all,Genus,Zygosaccharomyces,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Acaulospora laevis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Aegerita sp.,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Agaricus bisporus,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Agaricus campestris,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Agaricus sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Alpova diplophloeus,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Alternaria alternata,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Alternaria solani,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Alternaria sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Alternaria tenuis,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Amanita muscaria,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Amanita sp.,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Armillaria bulbosa,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Armillaria mellea,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Ascochyta pisi,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus brasiliensis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus flavus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus fumigatus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus glaucus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus nidulans,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus niger,19,n > 10,TRUE
+Fungi,GlcN,all,Species,Aspergillus ochraceus,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus oryzae,22,n > 10,TRUE
+Fungi,GlcN,all,Species,Aspergillus parasiticus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus versicolor,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Aspergillus wentii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Astraeus hygrometricus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Aureobasidium pullulans (de Bary),1,n > 10,FALSE
+Fungi,GlcN,all,Species,Auricularia auricula,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Auricularia auricula-judae,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Auricularia polytricha,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Auricularia sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Beauveria bassina,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Beauveria senella,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Beauveria sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Bionectria ochroleuca,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Bjerkandera adusta,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Blastobotrys sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Blastomyces dermatitidis,14,n > 10,TRUE
+Fungi,GlcN,all,Species,Boletus barrowsii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Boliniaceae sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Botrytis cinerea,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Buergenerula spartinae,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Cadophora finlandica,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Candida albicans,9,n > 10,FALSE
+Fungi,GlcN,all,Species,Candida albicans LAT1,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Candida albicans LEV1,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Candida utilis,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Cephalosporium acremonium,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Cephalotrichum microsporum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Chaetosphaeriaceae sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Choanephora cucurbitarum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Cladosporium cladospororoides,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Coccidioides immitis,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Colletotrichum coccodes,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Colletotrichum phomoides,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Colletotrichum sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Coniochaeta hoffmannii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Coriolus versicolor,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Craterellus cornucopioides,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Crinipellis perniciosa,8,n > 10,FALSE
+Fungi,GlcN,all,Species,Dactylium dendroides,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Didymella bryoniae,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Doratomyces microsporus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Epicoccum nigrum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Epidermophyton floccosum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Erysiphe graminis,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Eurotium echinulatum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Exophiala sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Flammulina filiformis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Flammulina velutipes,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium decemcellulare,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium fujikurio,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium fujikuroi,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium graminearum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium moniliforme,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium oxysporum,32,n > 10,TRUE
+Fungi,GlcN,all,Species,Fusarium sp.,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusarium sulphureum,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Fusicoccum amygdali,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Ganoderma lucidum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Ganoderma tsugae,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Geastrum minimum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Geomyces sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Geotrichum candidum,14,n > 10,TRUE
+Fungi,GlcN,all,Species,Geotrichum lactis,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Geotrichum sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Gibberella fujikurot,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Gibellulopsis nigrescens,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Gloeophyllum trabeum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Glomerella cingulata,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Glomus sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Grifola frondosa,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Gyrodon lividus,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Hansenula anomala,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Hebeloma cylindrosporum,29,n > 10,TRUE
+Fungi,GlcN,all,Species,Helicodendron conglomeratum,10,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron fuscum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron giganteum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron hyalinum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron triglitziense,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicodendron tubulosum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicoon ellipticum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicoon fuscosporum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Helicoon sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Helminthosporium sativum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Helmintosporium sativum,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Hendersonula toruloidea,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Hericium sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Heydenia sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Hirschioporus abietinus,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Histoplasma capsulatum,15,n > 10,TRUE
+Fungi,GlcN,all,Species,Hypsizygus tessulatus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Laccaria laccata,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Lactarius deliciosus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Lentinula edodes,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria albopunctata,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria allorgei,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria discors,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria nitschkei,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria orae-maris,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Leptosphaeria robusta,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Melotiales sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Metarhizium anisopliae,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Microdochium bolleyi,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Microsporum canis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Microsporum gypseum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Monascus purpureus,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Morchella elata,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Morchella esculenta,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Morchella sp.,12,n > 10,TRUE
+Fungi,GlcN,all,Species,Mortierella alpina,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mortierella gamsii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mucor genevensis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mucor hiemalis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mucor indicus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mucor mucedo,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mucor rouxii,6,n > 10,FALSE
+Fungi,GlcN,all,Species,Mycena galopus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Mycosphaerella pinodes,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Neurospora crassa,66,n > 10,TRUE
+Fungi,GlcN,all,Species,Neurospora sitophila,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Neurospora sp.,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Neurospora tetrasperma,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Oidiodendron griseun,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Oligoporus placentus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Oospora suaveolens,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Paecilomyces persicinus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Paecilomyces varioti,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Paracoccidioides brasiliensis,6,n > 10,FALSE
+Fungi,GlcN,all,Species,Paxillus involutus,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium charlesii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium chrysogenum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium citrinum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium cyclopium,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium digitatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium frequentans,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium griseofulvum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium italicum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium notatom,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium notatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium roqueforti,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penicillium sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penillium cyclopium,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Penillium notatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Periconia macrospinosa,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Peziza ostracoderma,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Phaeosphaeria typharum,5,n > 10,FALSE
+Fungi,GlcN,all,Species,Phanerochaete chrysosporium,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Phialocephala dimorphospora,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Phialocephala helvetica,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Phialophora mutabilis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pichia fermentans,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Picnoporus cinnabarinus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pisolithus tinctorius,17,n > 10,TRUE
+Fungi,GlcN,all,Species,Pleurotus citrinopileatus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pleurotus eryngii,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Pleurotus ostreatus,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Pleurotus pulmonarius,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Poria cocos,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Poria placenta,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Poria sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Psilocybe cyanescens,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pycnostysanus sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pyrenochaeta cava,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Pyrenochaeta sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Ramaria sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizoglomus irregulare,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizophagus irregularis,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizopus microsporus,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizopus oligosporus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizopus oryzae,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizopus sp.,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhizopus stolonifer,10,n > 10,FALSE
+Fungi,GlcN,all,Species,Rhynchosporium secalis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Russula sp.,12,n > 10,TRUE
+Fungi,GlcN,all,Species,Russula xerampelina,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Saccharomyces carlsbergensis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Saccharomyces cerevisiae,33,n > 10,TRUE
+Fungi,GlcN,all,Species,Schizophyllum commune,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Schizosaccharomyces pombe,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Schwanniomyces capriottii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Sclerotium rolfsii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Sordaria brevicollis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Sphaerostilbe repens,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Sphaerotheca mors-uvae,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Sporotrichum cellulophilum,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Stachybotrrys atra,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Suillus bovinus,7,n > 10,FALSE
+Fungi,GlcN,all,Species,Suillus caerulescens,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces bacillisporus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces emersonii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces luteus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces ohiensis,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces rotundus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Talaromyces stipitatus,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Taphrina cerasi,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Taphrina deformans,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Tetracladium furcatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Tetracladium maxilliforme,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Thamnidium elegans,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Thermoascus aurantiacus,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Torulopsis aeris,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Trametes versicolor,3,n > 10,FALSE
+Fungi,GlcN,all,Species,Tremella fuciformis,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichocladium asperum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma flavofuscum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma hanatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma harnanum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma koningli,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma longsbrachiatum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma viride,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichoderma vsride,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichophyton mentagrophytes,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Trichosporon cutaneum,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Tuber sp.,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Ulocladium alternariae,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Umbelopsis ramanniana,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Umbelopsis vinacea,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Verticillium albo-atrum,4,n > 10,FALSE
+Fungi,GlcN,all,Species,Volvariella volvacea,2,n > 10,FALSE
+Fungi,GlcN,all,Species,Zygorhynchus vuilleminii,1,n > 10,FALSE
+Fungi,GlcN,all,Species,Zygosaccharomyces rouxii,1,n > 10,FALSE

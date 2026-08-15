@@ -1,0 +1,10 @@
+kingdom,trait,subset,rank,threshold_rule,n_pairwise,n_significant,percent_significant
+Bacteria,MurA,all,Class,n > 20,3,2,66.66666666666667
+Bacteria,MurA,all,Genus,n > 10,105,39,37.142857142857146
+Bacteria,MurA,all,Order,n > 20,21,15,71.42857142857143
+Bacteria,MurA,all,Phylum,n > 50,3,2,66.66666666666667
+Bacteria,MurA,all,Species,n > 10,36,17,47.22222222222222
+Fungi,GlcN,all,Class,n > 20,21,14,66.66666666666667
+Fungi,GlcN,all,Genus,n > 10,171,62,36.25730994152047
+Fungi,GlcN,all,Order,n > 20,66,36,54.54545454545455
+Fungi,GlcN,all,Species,n > 10,66,27,40.90909090909091

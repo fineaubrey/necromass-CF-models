@@ -1,0 +1,9 @@
+Metric,N
+Raw rows,1791
+Non-finite MurA,187
+Non-finite GlcN,155
+Non-finite SOC,0
+SOC <= 0 among finite SOC,0
+MurA < 0 among finite MurA,0
+GlcN < 0 among finite GlcN,0
+Exact duplicate rows in processed input,0

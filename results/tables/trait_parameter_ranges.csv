@@ -1,0 +1,4 @@
+parameter,description,group,trait,n,p10,median,p90
+MGN,Gram-negative bacterial MurA content,Gram-negative bacteria,MurA,182,0.751,3.2,7.190000000000001
+MGP,Gram-positive bacterial MurA content,Gram-positive bacteria,MurA,262,5.33,21.925,48.402
+GF,Fungal GlcN content,Fungi,GlcN,781,9,33.68,92.8

@@ -1,0 +1,4 @@
+Variable,Units,N,Minimum,Maximum
+MurA,mg MurA g^-1 soil,1604,2e-5,3.5542689999999997
+GlcN,mg GlcN g^-1 soil,1604,4.3e-4,17.073
+SOC,mg C g^-1 soil,1604,1.406666667,487

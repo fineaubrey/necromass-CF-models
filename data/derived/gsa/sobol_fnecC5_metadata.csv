@@ -1,0 +1,15 @@
+item,details
+analysis,Canonical five-input composite fnecC Sobol GSA
+n_base,4096
+num_vars,5
+sampler,SALib.sample.sobol.sample
+seed,1234
+sampling_space,Independent unit-hypercube Sobol coordinates
+marginal_mapping,Each coordinate transformed independently through its empirical marginal from fnecC5_lhs.csv
+GS_MS_constraint,None; GS is NOT constrained to be >= MS
+rB_correction,None
+composite_NB,NB = CFB * MS
+composite_NF,NF = CFF * GS
+raw_output,fnecC_raw = 100*(NB + NF)/S
+sobol_target,"fnecC_bounded = min(fnecC_raw, 100)"
+row_filtering,None; complete Sobol matrix retained

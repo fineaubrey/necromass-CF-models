@@ -1,0 +1,106 @@
+# ============================================================
+# necromass-CF-models .gitignore
+# ============================================================
+
+# ------------------------------------------------------------
+# OS / editor clutter
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# ------------------------------------------------------------
+# R / RStudio
+# ------------------------------------------------------------
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# renv local library/cache should not be committed.
+# Commit renv.lock and renv/activate.R when renv is enabled.
+renv/library/
+renv/staging/
+renv/python/
+renv/local/
+renv/.cache/
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# ------------------------------------------------------------
+# Temporary / log files
+# ------------------------------------------------------------
+*.log
+*.tmp
+*.temp
+~$*
+
+# ------------------------------------------------------------
+# Large reproducible derived data
+#
+# These files are generated from data/processed + analysis code
+# and do not need to be version-controlled.
+# ------------------------------------------------------------
+
+# Full LHS simulation draws
+data/derived/lhs/*_lhs.csv
+
+# Large Sobol/GSA draw matrices and per-draw model outputs
+data/derived/gsa/*_draws_*.csv
+data/derived/gsa/*_outputs.csv
+data/derived/gsa/*_Si.npz
+data/derived/gsa/*_saltelli_Si.npz
+data/derived/gsa/*_second_order.csv
+
+# Diagnostic / forensic GSA runs
+data/derived/gsa_diagnostics/
+
+# Reproducible global-soil intermediate datasets
+data/derived/global_soils/Dataset2_analytical_sample.csv
+data/derived/global_soils/global_soils_model_estimates_wide.csv
+data/derived/global_soils/global_soils_model_estimates_long.csv
+data/derived/global_soils/global_soils_bland_altman_long.csv
+data/derived/global_soils/Fig4_*.csv
+data/derived/global_soils/Fig5_*.csv
+
+# ------------------------------------------------------------
+# Non-manuscript convenience figures
+#
+# Keep manuscript-ready figures under manuscript/figures/.
+# ------------------------------------------------------------
+analysis/figures/
+
+# ------------------------------------------------------------
+# Optional local output directories from earlier workflows
+# ------------------------------------------------------------
+outputs/
+
+# ------------------------------------------------------------
+# Keep these generated, compact outputs in Git
+#
+# Do NOT add ignore rules for:
+#   results/tables/
+#   manuscript/figures/
+#   data/derived/lhs/LHS_summary_statistics.csv
+#   data/derived/gsa/*_summary.csv
+#   data/derived/gsa/*_diagnostics.csv
+#   data/derived/gsa/*_metadata.csv
+#
+# They are small and useful for manuscript traceability.
+# ------------------------------------------------------------

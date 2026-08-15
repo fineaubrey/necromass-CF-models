@@ -1,0 +1,8 @@
+Gram,kingdom,group_type,group,trait,n,mean,median,p10,p90,min,max,Phylum
+GN,Bacteria,Gram,GN,MurA,182,4.027747252747253,3.2,0.751,7.190000000000001,0,33.53,NA
+GP,Bacteria,Gram,GP,MurA,262,26.143435114503816,21.925,5.33,48.402,0.93,106.89,NA
+NA,Fungi,Phylum,Ascomycota,GlcN,546,45.01545787545788,34,9.3,90.2,0.2,196.8,Ascomycota
+NA,Fungi,Phylum,Basidiomycota,GlcN,192,43.163645833333334,29.1,7.74,95.9,3.9,301,Basidiomycota
+NA,Fungi,Phylum,Glomeromycota,GlcN,7,74.50857142857143,61.97,29,130.284,26,139.14,Glomeromycota
+NA,Fungi,Phylum,Mucoromycota,GlcN,34,63.75411764705883,57.235,13.386,112.17500000000001,4.01,201,Mucoromycota
+NA,Fungi,Phylum,Zygomycota,GlcN,2,43.800000000000004,43.800000000000004,23.720000000000006,63.88,18.7,68.9,Zygomycota
