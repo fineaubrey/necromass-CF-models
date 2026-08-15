@@ -200,9 +200,9 @@ The canonical uncertainty-propagation workflow uses:
 - GlcN sampled over its selected empirical range
 - a molecular-carbon feasibility condition:
 
-\[
+```math
 0.430M_S + 0.402G_S \leq S
-\]
+```
 
 No `GS >= MS` constraint is imposed.
 
@@ -238,17 +238,17 @@ data/derived/gsa/
 
 For the **composite five-input model**:
 
-\[
+```math
 N_B = CF_B M_S
-\]
+```
 
-\[
+```math
 N_F = CF_F G_S
-\]
+```
 
-\[
+```math
 f_{necC} = 100\frac{N_B + N_F}{S}
-\]
+```
 
 - `MS` and `GS` are varied independently.
 - No `GS >= MS` constraint is imposed.
@@ -256,35 +256,35 @@ f_{necC} = 100\frac{N_B + N_F}{S}
 
 For the **trait-resolved ten-input model**:
 
-\[
+```math
 N_B = CF_BM_S
-\]
+```
 
-\[
+```math
 G_{S,\mathrm{corr}} =
 \max(G_S-r_{B,\mathrm{mass}}M_S,0)
-\]
+```
 
-\[
+```math
 N_F = CF_FG_{S,\mathrm{corr}}
-\]
+```
 
 where the bacterial GlcN:MurA ratio is sampled on a molar basis and converted before it is applied to mass-based soil concentrations:
 
-\[
+```math
 r_{B,\mathrm{mass}}
 =
 r_{B,\mathrm{molar}}
 \frac{MW_{\mathrm{GlcN}}}{MW_{\mathrm{MurA}}}
-\]
+```
 
 For the SOC-normalized Sobol analyses, all Sobol rows are retained and the sensitivity target is physically bounded:
 
-\[
+```math
 f_{necC,\mathrm{bounded}}
 =
 \min(f_{necC,\mathrm{raw}},100)
-\]
+```
 
 The raw, unbounded output is retained for diagnostics.
 
@@ -329,15 +329,15 @@ Four empirical estimates are compared:
 
 #### Standard conversion-factor model
 
-\[
+```math
 CF_{2006}
 =
 100\frac{45M_S+9G_S}{S}
-\]
+```
 
 #### Hu et al. (2024) formulation
 
-\[
+```math
 CF_{2024}
 =
 100
@@ -345,31 +345,31 @@ CF_{2024}
 31.3M_S+
 10.8\max(G_S-1.16M_S,0)
 }{S}
-\]
+```
 
 The fixed `1.16` bacterial GlcN correction is retained here because it is part of the published CF2024 formulation being compared. It is **not** used in the five-input composite GSA.
 
 #### Direct MurA + GlcN molecular carbon
 
-\[
+```math
 C_{\mathrm{MurA+GlcN}}
 =
 100
 \frac{
 0.430M_S+0.402G_S
 }{S}
-\]
+```
 
 #### Direct GlcN molecular carbon
 
-\[
+```math
 C_{\mathrm{GlcN}}
 =
 100
 \frac{
 0.402G_S
 }{S}
-\]
+```
 
 Empirical model outputs are **not capped at 100% SOC**. Values above 100% are retained and reported as diagnostics.
 
@@ -424,11 +424,11 @@ The script calculates:
 
 For Bland-Altman comparisons:
 
-\[
+```math
 \mathrm{difference}
 =
 \mathrm{method1}-\mathrm{method2}
-\]
+```
 
 so positive bias means method 1 tends to produce larger estimates.
 
@@ -456,11 +456,11 @@ This figure evaluates the relationship among soil GlcN, SOC, and CF-derived necr
 
 Panel A shows reference iso-`fnecC` contours for the fungal scaling term:
 
-\[
+```math
 f_{necC}
 =
 100\frac{CF_FG_S}{S}
-\]
+```
 
 using `CFF = 9`.
 
