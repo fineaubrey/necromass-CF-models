@@ -254,15 +254,27 @@ def run_sobol(
     # NO subtraction from GS.
     # -----------------------------------------------------------------
 
-    NB = CFB * MS
-    NF = CFF * GS
+    NB = md.NB_fun(
+        CFB,
+        MS,
+    )
+
+    # Composite formulation: NO bacterial GlcN correction.
+    NF = (
+        np.asarray(CFF, dtype=float)
+        * np.asarray(GS, dtype=float)
+    )
 
     total_nec_raw = NB + NF
 
-    fnecC_raw = (
-        100.0
-        * total_nec_raw
-        / S
+    # Use the canonical shared model definition so the Sobol script
+    # cannot silently diverge from model_definitions.py.
+    fnecC_raw = md.fnecC_composite_raw(
+        MS=MS,
+        GS=GS,
+        S=S,
+        CFB=CFB,
+        CFF=CFF,
     )
 
     # Physical bound used only as the Sobol response.
@@ -325,6 +337,7 @@ def run_sobol(
             "n_model_evaluations",
             "seed",
             "prop_GS_lt_MS",
+            "prop_molecular_C_infeasible",
             "raw_median",
             "raw_p99",
             "raw_max",
@@ -338,6 +351,13 @@ def run_sobol(
             len(fnecC_raw),
             seed,
             np.mean(GS < MS),
+            np.mean(
+                ~md.molecular_carbon_feasible(
+                    MS,
+                    GS,
+                    S,
+                )
+            ),
             np.median(fnecC_raw),
             np.quantile(fnecC_raw, 0.99),
             np.max(fnecC_raw),
@@ -454,6 +474,12 @@ def run_sobol(
     print(
         "[fnecC5] GS < MS diagnostic:",
         f"{100 * np.mean(GS < MS):.2f}%"
+    )
+    print(
+        "[fnecC5] molecular-C input infeasible:",
+        (
+            f"{100 * np.mean(~md.molecular_carbon_feasible(MS, GS, S)):.4f}%"
+        )
     )
     print(
         "[fnecC5] raw fnecC > 100%:",

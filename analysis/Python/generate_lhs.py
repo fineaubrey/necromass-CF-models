@@ -33,8 +33,12 @@ Important
   molecular-carbon input criterion:
       0.430*MS + 0.402*GS <= S
 - No upper bound is imposed on CF-derived fnecC in the LHS analysis.
-- rB is sampled as a MOLAR ratio and converted to a MASS ratio before
-  application to soil concentrations.
+- rB is used only in the fungal / trait-resolved formulations. It is
+  sampled as a MOLAR ratio and converted to a MASS ratio before
+  application to mass-based soil concentrations.
+- The five-input composite fnecC model applies NO rB correction:
+      NB = CFB * MS
+      NF = CFF * GS
 """
 
 import argparse
@@ -331,6 +335,11 @@ def make_nf_lhs(
 
 # =====================================================================
 # 5. Composite five-input fnecC model
+#
+# IMPORTANT:
+#   NO bacterial GlcN correction is applied here.
+#   NB = CFB * MS
+#   NF = CFF * GS
 # =====================================================================
 
 def make_fnecc5_lhs(
@@ -459,13 +468,19 @@ def make_fnecc10_lhs(
 
     S = soil["S"].to_numpy()
 
-    fnecC_raw = (
-        100.0
-        * (NB + NF)
-        / np.maximum(
-            S,
-            md.EPS,
-        )
+    # Use the canonical shared trait-resolved model definition so this
+    # LHS implementation cannot silently diverge from model_definitions.py.
+    fnecC_raw = md.fnecC_trait_raw(
+        MS=soil["MS"].to_numpy(),
+        GS=soil["GS"].to_numpy(),
+        S=S,
+        cB=cB,
+        MGP=MGP,
+        MGN=MGN,
+        fGP=fGP,
+        cF=cF,
+        GF=GF,
+        rB_molar=rB_molar,
     )
 
     return pd.DataFrame({

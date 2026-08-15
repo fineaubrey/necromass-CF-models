@@ -18,8 +18,9 @@ Key analysis choices
 - MS and S marginals are truncated to their observed ranges.
 - GS is restricted to its empirical P10-P90 range.
 - Soil marginals are varied independently in the current LHS workflow.
-- rB is sampled as a MOLAR GlcN:MurA ratio and converted to a MASS ratio
-  before application to mass-based soil concentrations.
+- rB is used ONLY in the trait-resolved formulation. It is sampled as
+  a MOLAR GlcN:MurA ratio and converted to a MASS ratio before application
+  to mass-based soil concentrations.
 - Molecular-carbon feasibility uses exact molecular carbon fractions:
       MurA = 0.430
       GlcN = 0.402
@@ -58,11 +59,6 @@ SOIL_GS_QHI = 0.90
 MW_GLCN = 179.17
 MW_MURA = 251.23
 RB_MOLAR_TO_MASS = MW_GLCN / MW_MURA
-
-# Fixed MASS ratio used in the current composite analysis.
-# This corresponds approximately to rB,m = 1.16 in the empirical
-# Hu et al. implementation.
-RB_MASS_CONST = 1.16
 
 # Exact carbon mass fractions used in the current analysis.
 MURA_C_FRACTION = 0.430
@@ -528,19 +524,11 @@ def NF_from_molar_ratio(
     rB_molar,
 ):
     return NF_from_mass_ratio(
-        CFF=CFB_safe(CFF),
+        CFF=CFF,
         GS=GS,
         MS=MS,
         rB_mass=rb_molar_to_mass(rB_molar),
     )
-
-
-def CFB_safe(x):
-    """
-    Numeric pass-through used to make the intended type conversion
-    explicit in shared model calls.
-    """
-    return np.asarray(x, dtype=float)
 
 
 # =====================================================================
