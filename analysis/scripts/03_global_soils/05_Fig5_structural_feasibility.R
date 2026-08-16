@@ -385,7 +385,7 @@ contours_other <- contours %>%
 lab_100 <- contours_100 %>%
   slice(
     round(
-      0.78 *
+      0.68 *
         n()
     )
   ) %>%
@@ -551,7 +551,7 @@ pA <- ggplot(
     fill = "grey75",
     color = "black",
     stroke = 0.18,
-    alpha = 0.72,
+    alpha = 0.52,
     size = 1.6
   ) +
   
@@ -604,7 +604,7 @@ pA <- ggplot(
   
   scale_y_log10(
     labels = scales::label_number(
-      accuracy = 0.1
+      accuracy = 0.01
     )
   ) +
   
@@ -639,11 +639,8 @@ pA <- ggplot(
     ),
     
     y = expression(
-      (45 * italic(M)[S] +
-         9 * italic(G)[S]) ~
-        "(mg C " *
-        g^{-1} *
-        " soil)"
+      "Necromass C" ~
+        "(mg C " * g^{-1} * " soil)"
     )
   ) +
   
