@@ -1,33 +1,39 @@
 # ============================================================
 # Phase 3 — Figure 5: Structural feasibility of CF2006
 #
-# Current manuscript figure:
-#   Figure 5. Structural feasibility and emergent behavior
-#   of the standard CF model (CF2006).
+# Figure 5:
+# Structural feasibility and emergent behavior of the
+# standard CF model (CF2006).
 #
 # Input:
 #   data/derived/global_soils/global_soils_model_estimates_wide.csv
 #
 # IMPORTANT:
-# - This input is already the canonical paired analytical sample.
+# - Input is the canonical paired analytical sample.
 # - MurA and GlcN are already in mg g^-1 soil.
-# - NO additional outlier filtering is applied here.
-# - CF2006 is NOT recalculated; the canonical value from Step 02 is used.
+# - NO additional outlier filtering is applied.
+# - The canonical CF2006 value generated in Step 02 is retained.
 #
 # Panel A:
-#   Observed GlcN (GS) vs SOC (S), with reference iso-fnecC
-#   contours for the dominant fungal term:
+#   Exact full-CF2006 structural relationship:
 #
-#       fnecC = 100 * (CFF * GS) / S
+#       N_CF2006 = 45*MS + 9*GS
 #
-#   using CFF = 9.
+#       fnecC = 100 * N_CF2006 / S
 #
-#   These contours are a structural reference surface for the
-#   fungal scaling term. They are not the exact full CF2006 surface,
-#   because the full model also contains 45*MurA.
+#   Therefore:
+#
+#       N_CF2006 = (fnecC / 100) * S
+#
+#   The 100% contour is the exact physical boundary for CF2006.
 #
 # Panel B:
-#   Full canonical CF2006 fnecC vs observed GlcN, colored by SOC.
+#   Full canonical CF2006 fnecC vs observed soil GlcN,
+#   colored by SOC.
+#
+#   This illustrates that increasing GS does not map uniquely
+#   onto increasing fnecC because SOC normalization and MurA
+#   also affect the final estimate.
 #
 # Outputs:
 #   analysis/figures/Fig5.png
@@ -38,7 +44,9 @@
 #   data/derived/global_soils/Fig5_panelB_source.csv
 # ============================================================
 
+
 options(scipen = 999)
+
 
 suppressPackageStartupMessages({
   library(tidyverse)
@@ -49,6 +57,7 @@ suppressPackageStartupMessages({
   library(grid)
   library(viridis)
 })
+
 
 # ------------------------------------------------------------
 # Setup
@@ -62,6 +71,7 @@ source(
   )
 )
 
+
 # ------------------------------------------------------------
 # Paths
 # ------------------------------------------------------------
@@ -73,11 +83,13 @@ infile <- here::here(
   "global_soils_model_estimates_wide.csv"
 )
 
+
 data_outdir <- here::here(
   "data",
   "derived",
   "global_soils"
 )
+
 
 dir.create(
   data_outdir,
@@ -85,13 +97,15 @@ dir.create(
   showWarnings = FALSE
 )
 
+
 if (!file.exists(infile)) {
   stop(
     "Canonical model-estimate file not found: ",
     infile,
-    "\nRun 02_Fig6_global_soils_model_comparisons.R first."
+    "\nRun 02_Fig4_global_soils_model_comparisons.R first."
   )
 }
+
 
 # ------------------------------------------------------------
 # Read canonical model estimates
@@ -102,6 +116,7 @@ dat <- readr::read_csv(
   show_col_types = FALSE
 )
 
+
 required_cols <- c(
   "obs_id",
   "MurA",
@@ -110,10 +125,12 @@ required_cols <- c(
   "CF2006"
 )
 
+
 missing_cols <- setdiff(
   required_cols,
   names(dat)
 )
+
 
 if (length(missing_cols) > 0) {
   stop(
@@ -125,6 +142,7 @@ if (length(missing_cols) > 0) {
   )
 }
 
+
 # ------------------------------------------------------------
 # Integrity checks
 # ------------------------------------------------------------
@@ -135,6 +153,7 @@ if (anyDuplicated(dat$obs_id) > 0) {
   )
 }
 
+
 numeric_check <- dat %>%
   select(
     MurA,
@@ -142,6 +161,7 @@ numeric_check <- dat %>%
     SOC,
     CF2006
   )
+
 
 if (
   any(
@@ -157,61 +177,101 @@ if (
   )
 }
 
+
 if (any(dat$SOC <= 0)) {
   stop(
     "SOC must be > 0."
   )
 }
 
+
 if (any(dat$GlcN <= 0)) {
   stop(
-    "Panel A uses a log10 y-axis, so GlcN must be > 0."
+    "GlcN must be > 0."
   )
 }
+
+
+# ============================================================
+# Construct exact CF2006 numerator
+#
+# CF2006:
+#
+#   fnecC = 100 * (45*MS + 9*GS) / S
+#
+# Therefore:
+#
+#   N_CF2006 = 45*MS + 9*GS
+#
+# ============================================================
+
+dat <- dat %>%
+  mutate(
+    CF2006_numerator =
+      45 * MurA +
+      9 * GlcN,
+    
+    CF2006_check =
+      100 *
+      CF2006_numerator /
+      SOC,
+    
+    over100 =
+      CF2006 > 100
+  )
+
+
+# ------------------------------------------------------------
+# Verify that the formula reproduces canonical CF2006
+# ------------------------------------------------------------
+
+max_cf_difference <- max(
+  abs(
+    dat$CF2006 -
+      dat$CF2006_check
+  )
+)
+
+
+message(
+  "Maximum difference between canonical CF2006 and ",
+  "formula-derived CF2006: ",
+  signif(
+    max_cf_difference,
+    6
+  )
+)
+
+
+if (max_cf_difference > 1e-6) {
+  stop(
+    "Canonical CF2006 values do not match ",
+    "100*(45*MurA + 9*GlcN)/SOC."
+  )
+}
+
+
+# ------------------------------------------------------------
+# Diagnostics
+# ------------------------------------------------------------
 
 message(
   "Figure 5 observations: ",
   nrow(dat)
 )
 
-message(
-  "GlcN range (mg g^-1 soil): ",
-  signif(
-    min(dat$GlcN),
-    5
-  ),
-  " - ",
-  signif(
-    max(dat$GlcN),
-    5
-  )
-)
 
 message(
-  "SOC range (mg C g^-1 soil): ",
-  signif(
-    min(dat$SOC),
-    5
+  "CF2006 observations >100% SOC: ",
+  sum(dat$over100),
+  " (",
+  round(
+    100 * mean(dat$over100),
+    2
   ),
-  " - ",
-  signif(
-    max(dat$SOC),
-    5
-  )
+  "%)"
 )
 
-message(
-  "CF2006 range (% SOC): ",
-  signif(
-    min(dat$CF2006),
-    5
-  ),
-  " - ",
-  signif(
-    max(dat$CF2006),
-    5
-  )
-)
 
 # ============================================================
 # Source data
@@ -223,11 +283,11 @@ src_panelA_points <- dat %>%
     SOC,
     MurA,
     GS = GlcN,
+    CF2006_numerator,
     CF2006,
-    over100 = (
-      CF2006 > 100
-    )
+    over100
   )
+
 
 src_panelB <- dat %>%
   transmute(
@@ -238,18 +298,28 @@ src_panelB <- dat %>%
     CF2006
   )
 
+
 # ============================================================
-# Panel A: structural reference surface
+# Panel A — exact full-CF2006 feasibility surface
 #
-# Dominant fungal term:
+# Full CF2006:
 #
-#   fnecC = 100 * CFF * GS / S
+#   fnecC =
+#       100 * (45*MS + 9*GS) / S
 #
-# Solve for GS:
+# Define:
 #
-#   GS = (fnecC / 100) * S / CFF
+#   N_CF2006 = 45*MS + 9*GS
 #
-# For CF2006, CFF = 9.
+# For a specified fnecC:
+#
+#   N_CF2006 =
+#       (fnecC / 100) * S
+#
+# Thus the 100% boundary is exactly:
+#
+#   N_CF2006 = S
+#
 # ============================================================
 
 levels_f <- c(
@@ -260,23 +330,19 @@ levels_f <- c(
   100
 )
 
-CFF_std <- 9
 
 soc_grid <- tibble(
   SOC = 10^seq(
     log10(
-      min(
-        dat$SOC
-      )
+      min(dat$SOC)
     ),
     log10(
-      max(
-        dat$SOC
-      )
+      max(dat$SOC)
     ),
     length.out = 300
   )
 )
+
 
 contours <- purrr::map_dfr(
   levels_f,
@@ -285,11 +351,10 @@ contours <- purrr::map_dfr(
     soc_grid %>%
       mutate(
         fnecC = f,
-        GS = (
+        
+        CF2006_numerator =
           (f / 100) *
-            SOC /
-            CFF_std
-        )
+          SOC
       )
   }
 ) %>%
@@ -300,29 +365,71 @@ contours <- purrr::map_dfr(
     )
   )
 
+
 contours_100 <- contours %>%
   filter(
     fnecC == "100"
   )
+
 
 contours_other <- contours %>%
   filter(
     fnecC != "100"
   )
 
+
+# ------------------------------------------------------------
+# Position label on 100% boundary
+# ------------------------------------------------------------
+
 lab_100 <- contours_100 %>%
   slice(
     round(
-      0.80 *
+      0.78 *
         n()
     )
   ) %>%
   transmute(
     SOC,
-    GS,
+    CF2006_numerator,
     label =
-      "italic(f)[necC] == 100*'% (reference limit)'"
+      "italic(f)[necC] == 100*'% limit'"
   )
+
+
+# ------------------------------------------------------------
+# Exact classification check
+#
+# Every observation above the 100% line should correspond
+# exactly to canonical CF2006 > 100%.
+# ------------------------------------------------------------
+
+boundary_check <- src_panelA_points %>%
+  mutate(
+    above_100_line =
+      CF2006_numerator > SOC
+  )
+
+
+if (
+  !all(
+    boundary_check$above_100_line ==
+    boundary_check$over100
+  )
+) {
+  stop(
+    "Panel A 100% boundary does not exactly reproduce ",
+    "the canonical CF2006 >100% classification."
+  )
+}
+
+
+message(
+  "Panel A exact-boundary check passed: ",
+  sum(boundary_check$above_100_line),
+  " observations above 100% line."
+)
+
 
 # ------------------------------------------------------------
 # Save source data
@@ -336,6 +443,7 @@ readr::write_csv(
   )
 )
 
+
 readr::write_csv(
   contours,
   file.path(
@@ -343,6 +451,7 @@ readr::write_csv(
     "Fig5_panelA_contours.csv"
   )
 )
+
 
 readr::write_csv(
   src_panelB,
@@ -352,17 +461,20 @@ readr::write_csv(
   )
 )
 
+
 # ============================================================
-# Shared SOC fill scale
+# SOC fill scale for Panel B
 # ============================================================
 
 soc_min <- min(
   dat$SOC
 )
 
+
 soc_max <- max(
   dat$SOC
 )
+
 
 soc_break_candidates <- c(
   2,
@@ -375,10 +487,12 @@ soc_break_candidates <- c(
   500
 )
 
+
 soc_breaks <- soc_break_candidates[
   soc_break_candidates >= soc_min &
     soc_break_candidates <= soc_max
 ]
+
 
 fill_name <- expression(
   italic(S) ~
@@ -387,7 +501,9 @@ fill_name <- expression(
     " soil)"
 )
 
+
 make_soc_fill_scale <- function() {
+  
   scale_fill_viridis_c(
     option = "mako",
     direction = 1,
@@ -400,9 +516,23 @@ make_soc_fill_scale <- function() {
       soc_max
     ),
     oob = scales::squish,
-    name = fill_name
+    name = fill_name,
+    
+    guide = guide_colorbar(
+      title.position = "top",
+      title.hjust = 0.5,
+      barwidth = unit(
+        42,
+        "mm"
+      ),
+      barheight = unit(
+        3,
+        "mm"
+      )
+    )
   )
 }
+
 
 # ============================================================
 # Panel A
@@ -412,26 +542,25 @@ pA <- ggplot(
   src_panelA_points,
   aes(
     x = SOC,
-    y = GS
+    y = CF2006_numerator
   )
 ) +
   
   geom_point(
-    aes(
-      fill = SOC
-    ),
     shape = 21,
+    fill = "grey75",
     color = "black",
     stroke = 0.18,
     alpha = 0.72,
     size = 1.6
   ) +
   
+  # 10–70% contours
   geom_line(
     data = contours_other,
     aes(
       x = SOC,
-      y = GS,
+      y = CF2006_numerator,
       linetype = fnecC
     ),
     linewidth = 0.55,
@@ -440,11 +569,12 @@ pA <- ggplot(
     inherit.aes = FALSE
   ) +
   
+  # Exact 100% physical boundary
   geom_line(
     data = contours_100,
     aes(
       x = SOC,
-      y = GS
+      y = CF2006_numerator
     ),
     linewidth = 0.95,
     color = "grey12",
@@ -455,12 +585,12 @@ pA <- ggplot(
     data = lab_100,
     aes(
       x = SOC,
-      y = GS,
+      y = CF2006_numerator,
       label = label
     ),
     parse = TRUE,
     hjust = 1.02,
-    vjust = -0.45,
+    vjust = -0.5,
     size = 2.7,
     color = "grey12",
     inherit.aes = FALSE
@@ -474,11 +604,9 @@ pA <- ggplot(
   
   scale_y_log10(
     labels = scales::label_number(
-      accuracy = 0.01
+      accuracy = 0.1
     )
   ) +
-  
-  make_soc_fill_scale() +
   
   scale_linetype_manual(
     values = c(
@@ -487,8 +615,16 @@ pA <- ggplot(
       "50" = "dashed",
       "70" = "dotdash"
     ),
+    
+    breaks = c(
+      "10",
+      "30",
+      "50",
+      "70"
+    ),
+    
     name = expression(
-      "Fungal-term iso-" *
+      "Full CF2006 iso-" *
         italic(f)[necC] *
         " (%)"
     )
@@ -501,9 +637,11 @@ pA <- ggplot(
         g^{-1} *
         " soil)"
     ),
+    
     y = expression(
-      italic(G)[S] ~
-        "(mg GlcN " *
+      (45 * italic(M)[S] +
+         9 * italic(G)[S]) ~
+        "(mg C " *
         g^{-1} *
         " soil)"
     )
@@ -512,34 +650,35 @@ pA <- ggplot(
   theme_sbb_small() +
   
   guides(
-    fill = guide_colorbar(
-      title.position = "top",
-      barwidth = unit(
-        36,
-        "mm"
-      ),
-      barheight = unit(
-        3,
-        "mm"
-      )
-    ),
-    
     linetype = guide_legend(
       title.position = "top",
+      title.hjust = 0.5,
       nrow = 1,
-      byrow = TRUE
+      byrow = TRUE,
+      keywidth = unit(
+        12,
+        "mm"
+      )
     )
   ) +
   
   theme(
     panel.grid.major =
       element_blank(),
+    
     panel.grid.minor =
       element_blank()
   )
 
+
 # ============================================================
-# Panel B: full CF2006 outcomes vs GlcN
+# Panel B
+#
+# Full CF2006 outcomes vs observed soil GlcN
+#
+# This panel demonstrates that higher GlcN does not map
+# uniquely onto higher fnecC because SOC normalization and
+# MurA also influence the final estimate.
 # ============================================================
 
 x_break_candidates <- c(
@@ -552,12 +691,14 @@ x_break_candidates <- c(
   16
 )
 
+
 x_breaks <- x_break_candidates[
   x_break_candidates <=
     max(
       src_panelB$soilGlcN
     )
 ]
+
 
 pB <- ggplot(
   src_panelB,
@@ -595,6 +736,7 @@ pB <- ggplot(
   
   scale_y_continuous(
     trans = "sqrt",
+    
     breaks = c(
       0,
       25,
@@ -605,15 +747,21 @@ pB <- ggplot(
       1000,
       1500
     ),
+    
     labels = function(x) {
-      paste0(scales::comma(x), "%")
+      paste0(
+        scales::comma(x),
+        "%"
+      )
     }
   ) +
   
   labs(
     y = expression(
-      italic(f)[necC] ~ "(% SOC)"
+      italic(f)[necC] ~
+        "(% SOC)"
     ),
+    
     x = expression(
       italic(G)[S] ~
         "(mg GlcN " *
@@ -622,15 +770,32 @@ pB <- ggplot(
     )
   ) +
   
-  theme_sbb_small()
+  theme_sbb_small() +
+  
+  theme(
+    panel.grid.major =
+      element_blank(),
+    
+    panel.grid.minor =
+      element_blank()
+  )
+
+
 # ============================================================
 # Combine panels
+#
+# Panel A:
+#   exact full-CF2006 feasibility geometry
+#
+# Panel B:
+#   empirical GS–fnecC relationship
 # ============================================================
 
 final_fig <- (
   pA /
     pB
 ) +
+  
   plot_layout(
     guides = "collect",
     heights = c(
@@ -638,20 +803,37 @@ final_fig <- (
       1
     )
   ) +
+  
   plot_annotation(
     tag_levels = "A"
   ) &
+  
   theme(
     legend.position = "bottom",
     legend.direction = "horizontal",
+    legend.box = "vertical",
+    legend.box.just = "center",
+    
     legend.box.margin = margin(
-      t = 6
+      t = 6,
+      r = 4,
+      b = 2,
+      l = 4
+    ),
+    
+    legend.margin = margin(
+      t = 1,
+      r = 2,
+      b = 1,
+      l = 2
     )
   )
+
 
 print(
   final_fig
 )
+
 
 # ============================================================
 # Save
@@ -671,12 +853,14 @@ save_figure(
   )
 )
 
+
 message(
   "\nSaved Figure 5:\n",
   "  analysis/figures/Fig5.png\n",
   "  analysis/figures/Fig5.tiff\n",
   "  manuscript/figures/Fig5.pdf\n"
 )
+
 
 message(
   "\nSaved Figure 5 source data:\n",
