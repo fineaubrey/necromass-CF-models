@@ -14,9 +14,8 @@ Key analysis choices
 --------------------
 - Dataset 1 fungal trait distribution excludes Oomycota (N = 781).
 - MGP, MGN, and GF are sampled from empirical P10-P90 quantile ranges.
-- Soil MS and GS are fitted with lognormal marginals; SOC (S) with gamma.
-- MS and S marginals are truncated to their observed ranges.
-- GS is restricted to its empirical P10-P90 range.
+- MS and GS marginals are restricted to their empirical P10-P90 ranges.
+- S is truncated to its observed range.
 - Soil marginals are varied independently in the current LHS workflow.
 - rB is used ONLY in the trait-resolved formulation. It is sampled as
   a MOLAR GlcN:MurA ratio and converted to a MASS ratio before application
@@ -51,6 +50,10 @@ EPS = 1e-12
 
 TRAIT_QLO = 0.10
 TRAIT_QHI = 0.90
+
+# Soil biomarker sampling bounds
+SOIL_MS_QLO = 0.10
+SOIL_MS_QHI = 0.90
 
 SOIL_GS_QLO = 0.10
 SOIL_GS_QHI = 0.90
@@ -345,10 +348,16 @@ _s_dist = stats.gamma(
 )
 
 # Current LHS domain:
-# MS and S -> observed min-max
-# GS -> empirical P10-P90
-MS_LO = float(soils["MS"].min())
-MS_HI = float(soils["MS"].max())
+# MS and GS -> empirical P10-P90
+# S -> observed min-max
+
+MS_LO, MS_HI = np.quantile(
+    soils["MS"].to_numpy(dtype=float),
+    [SOIL_MS_QLO, SOIL_MS_QHI],
+)
+
+MS_LO = float(MS_LO)
+MS_HI = float(MS_HI)
 
 GS_LO, GS_HI = np.quantile(
     soils["GS"].to_numpy(dtype=float),
@@ -783,6 +792,6 @@ if __name__ == "__main__":
     print()
 
     print("Soil sampling domain:")
-    print("  MS:", MS_LO, MS_HI)
+    print("  MS P10-P90:", MS_LO, MS_HI)
     print("  GS P10-P90:", GS_LO, GS_HI)
-    print("  S:", S_LO, S_HI)
+    print("  S observed range:", S_LO, S_HI)
