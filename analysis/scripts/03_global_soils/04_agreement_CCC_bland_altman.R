@@ -28,16 +28,6 @@
 # Therefore:
 #   positive mean difference -> method1 tends to give larger outputs
 #   negative mean difference -> method2 tends to give larger outputs
-# Bland–Altman orientation
-# ------------------------
-# For every comparison:
-#
-#   difference = method1 - method2
-#   pair_mean  = (method1 + method2) / 2
-#
-# Therefore:
-#   positive bias -> method1 tends to give larger estimates
-#   negative bias -> method2 tends to give larger estimates
 #
 # Outputs:
 #   results/tables/global_soils_CCC_pairwise.csv
@@ -430,16 +420,16 @@ ba_summary_pair <- function(
   d <- df_pair$difference
   n <- length(d)
   
-  bias <- mean(d)
+  mean_difference <- mean(d)
   sd_diff <- sd(d)
   
   lower_loa <- (
-    bias -
+    mean_difference -
       1.96 * sd_diff
   )
   
   upper_loa <- (
-    bias +
+    mean_difference +
       1.96 * sd_diff
   )
   
@@ -456,13 +446,13 @@ ba_summary_pair <- function(
       
       db <- d[ii]
       
-      bias_b <- mean(db)
+      mean_difference_b <- mean(db)
       sd_b <- sd(db)
       
       c(
-        bias = bias_b,
-        lower_loa = bias_b - 1.96 * sd_b,
-        upper_loa = bias_b + 1.96 * sd_b
+        mean_difference = mean_difference_b,
+        lower_loa = mean_difference_b - 1.96 * sd_b,
+        upper_loa = mean_difference_b + 1.96 * sd_b
       )
     }
   )
@@ -471,8 +461,8 @@ ba_summary_pair <- function(
     boot_stats
   )
   
-  ci_bias <- quantile(
-    boot_stats[, "bias"],
+  ci_mean_difference <- quantile(
+    boot_stats[, "mean_difference"],
     probs = c(
       0.025,
       0.975
@@ -513,9 +503,9 @@ ba_summary_pair <- function(
     ),
     N = n,
     
-    mean_difference = bias,
-    mean_difference_ci_low = ci_bias[1],
-    mean_difference_ci_high = ci_bias[2],
+    mean_difference = mean_difference,
+    mean_difference_ci_low = ci_mean_difference[1],
+    mean_difference_ci_high = ci_mean_difference[2],
     
     SD_difference = sd_diff,
     
@@ -606,7 +596,7 @@ plot_bland_altman <- function(
     summary_row
 ) {
   
-  bias <- summary_row$bias
+  mean_difference <- summary_row$mean_difference
   lower <- summary_row$lower_LoA
   upper <- summary_row$upper_LoA
   
@@ -634,7 +624,7 @@ plot_bland_altman <- function(
     ) +
     
     geom_hline(
-      yintercept = bias,
+      yintercept = mean_difference,
       linewidth = 0.6
     ) +
     
@@ -747,7 +737,7 @@ ggsave(
   filename = out_png,
   plot = grid_plot,
   width = 10,
-  height = 6.5,
+  height = 4.5,
   units = "in",
   dpi = 600
 )
@@ -756,7 +746,7 @@ ggsave(
   filename = out_pdf,
   plot = grid_plot,
   width = 10,
-  height = 6.5,
+  height = 4.5,
   units = "in",
   device = grDevices::cairo_pdf
 )
@@ -783,9 +773,9 @@ print(
     select(
       comparison,
       N,
-      bias,
-      bias_ci_low,
-      bias_ci_high,
+      mean_difference,
+      mean_difference_ci_low,
+      mean_difference_ci_high,
       lower_LoA,
       upper_LoA,
       median_difference
@@ -803,5 +793,3 @@ message(
   "\n  ",
   out_png,
   "\n  ",
-  out_pdf
-)
