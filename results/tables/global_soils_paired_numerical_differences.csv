@@ -1,0 +1,7 @@
+comparison,comparison_type,method1,method2,N_pairs,median_difference,median_difference_ci_low,median_difference_ci_high
+CF2006 minus CF2024,within CF family,CF2006,CF2024,1604,0.7115052839725138,0.48921474947639965,0.9353030867315001
+CF2006 minus Cmass_MurAGlcN,cross-family numerical contrast,CF2006,Cmass_MurAGlcN,1604,50.27050714555766,48.65891755485883,51.66238754325259
+CF2006 minus Cmass_GlcN,cross-family numerical contrast,CF2006,Cmass_GlcN,1604,50.392061398865785,48.8180133242692,51.80354889346618
+CF2024 minus Cmass_MurAGlcN,cross-family numerical contrast,CF2024,Cmass_MurAGlcN,1604,48.510713884110324,47.69018693877551,49.92347665499946
+CF2024 minus Cmass_GlcN,cross-family numerical contrast,CF2024,Cmass_GlcN,1604,48.64065818227594,47.81997403823599,50.120820379965465
+Cmass_MurAGlcN minus Cmass_GlcN,within molecule-level family,Cmass_MurAGlcN,Cmass_GlcN,1604,0.13172334025898752,0.12595739999999989,0.13665903307888083

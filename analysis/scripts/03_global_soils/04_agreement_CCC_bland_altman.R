@@ -13,11 +13,21 @@
 #
 # Analyses:
 #   1. Lin's concordance correlation coefficient (CCC)
-#      for all six unique method pairs
-#   2. Bland–Altman analysis for all six unique method pairs
-#   3. Bootstrap 95% CIs (10,000 resamples) for CCC, bias,
-#      and limits of agreement
+#      for two within-family comparisons
+#   2. Bland–Altman analysis for the same comparisons
+#   3. Bootstrap 95% CIs (10,000 resamples) for CCC,
+#      mean paired difference, and limits of agreement
 #
+# Bland–Altman orientation
+# ------------------------
+# For every comparison:
+#
+#   difference = method1 - method2
+#   pair_mean  = (method1 + method2) / 2
+#
+# Therefore:
+#   positive mean difference -> method1 tends to give larger outputs
+#   negative mean difference -> method2 tends to give larger outputs
 # Bland–Altman orientation
 # ------------------------
 # For every comparison:
@@ -204,7 +214,7 @@ method_labels <- c(
 )
 
 # ------------------------------------------------------------
-# All six unique pairs
+# Within-family comparisons only
 # ------------------------------------------------------------
 
 pair_list <- list(
