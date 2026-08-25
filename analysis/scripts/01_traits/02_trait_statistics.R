@@ -19,6 +19,9 @@
 #   - Kruskal-Wallis tests across taxonomic ranks
 #   - Dunn post-hoc tests with Holm adjustment following
 #     significant Kruskal-Wallis tests
+#   - Rank-biserial correlations for the Mann-Whitney and
+#     pairwise Dunn contrasts
+#   - Epsilon-squared effect sizes for Kruskal-Wallis tests
 #   - GP-only taxonomic comparisons
 #   - 3 x median absolute deviation (MAD) outlier flags
 #
@@ -79,6 +82,13 @@ fung_traits <- traits$fungi
 
 alpha <- 0.05
 
+# Bootstrap settings for the primary GN-vs-GP rank-biserial
+# correlation. Dunn rank-biserial correlations are reported as
+# point estimates to avoid running a separate 10,000-resample
+# bootstrap for every taxonomic contrast.
+effect_boot_R <- 10000
+effect_boot_seed <- 42
+
 rank_thresholds <- c(
   Phylum = 50,
   Class = 20,
@@ -97,10 +107,10 @@ rank_thresholds <- c(
 # ============================================================
 
 flag_mad_outliers <- function(
-  data,
-  value_col,
-  kingdom,
-  trait
+    data,
+    value_col,
+    kingdom,
+    trait
 ) {
 
   x <- data[[value_col]]
@@ -164,6 +174,151 @@ flag_mad_outliers <- function(
 }
 
 # ============================================================
+# Helpers: rank-biserial correlation
+#
+# For two independent groups, the rank-biserial correlation is
+# calculated from the Mann-Whitney U statistic:
+#
+#   r_rb = 2U / (n1 * n2) - 1
+#
+# Average ranks are used for ties. Positive values indicate that
+# values in group 1 tend to exceed values in group 2; negative
+# values indicate that group 2 tends to exceed group 1.
+# The statistic ranges from -1 to 1.
+# ============================================================
+
+rank_biserial_independent <- function(
+    x,
+    y
+) {
+
+  x <- as.numeric(x)
+  y <- as.numeric(y)
+
+  x <- x[is.finite(x)]
+  y <- y[is.finite(y)]
+
+  n1 <- length(x)
+  n2 <- length(y)
+
+  if (
+    n1 == 0 ||
+    n2 == 0
+  ) {
+    return(NA_real_)
+  }
+
+  pooled_ranks <- rank(
+    c(
+      x,
+      y
+    ),
+    ties.method = "average"
+  )
+
+  U1 <- sum(
+    pooled_ranks[
+      seq_len(n1)
+    ]
+  ) -
+    n1 *
+    (
+      n1 + 1
+    ) /
+    2
+
+  r_rb <-
+    2 * U1 /
+    (
+      n1 * n2
+    ) -
+    1
+
+  # Protect against negligible floating-point excursions beyond
+  # the theoretical range.
+  max(
+    -1,
+    min(
+      1,
+      r_rb
+    )
+  )
+}
+
+bootstrap_rank_biserial <- function(
+    x,
+    y,
+    R = 10000,
+    seed = 42
+) {
+
+  x <- as.numeric(x)
+  y <- as.numeric(y)
+
+  x <- x[is.finite(x)]
+  y <- y[is.finite(y)]
+
+  n1 <- length(x)
+  n2 <- length(y)
+
+  if (
+    n1 < 2 ||
+    n2 < 2
+  ) {
+    return(
+      tibble::tibble(
+        rank_biserial = NA_real_,
+        rank_biserial_ci_low = NA_real_,
+        rank_biserial_ci_high = NA_real_
+      )
+    )
+  }
+
+  estimate <- rank_biserial_independent(
+    x,
+    y
+  )
+
+  set.seed(seed)
+
+  boot_values <- replicate(
+    R,
+    rank_biserial_independent(
+      sample(
+        x,
+        size = n1,
+        replace = TRUE
+      ),
+      sample(
+        y,
+        size = n2,
+        replace = TRUE
+      )
+    )
+  )
+
+  ci <- stats::quantile(
+    boot_values,
+    probs = c(
+      0.025,
+      0.975
+    ),
+    names = FALSE,
+    na.rm = TRUE
+  )
+
+  tibble::tibble(
+    rank_biserial = estimate,
+    rank_biserial_ci_low = as.numeric(
+      ci[1]
+    ),
+    rank_biserial_ci_high = as.numeric(
+      ci[2]
+    )
+  )
+}
+
+# ============================================================
 # Helper: Dunn test with Holm correction
 #
 # Implemented directly to minimize package dependencies.
@@ -172,9 +327,9 @@ flag_mad_outliers <- function(
 # ============================================================
 
 dunn_holm <- function(
-  data,
-  value_col,
-  group_col
+    data,
+    value_col,
+    group_col
 ) {
 
   d <- data %>%
@@ -265,6 +420,22 @@ dunn_holm <- function(
           .data$group == pair[2]
         )
 
+      values1 <- d %>%
+        dplyr::filter(
+          .data$group == pair[1]
+        ) %>%
+        dplyr::pull(
+          .data$value
+        )
+
+      values2 <- d %>%
+        dplyr::filter(
+          .data$group == pair[2]
+        ) %>%
+        dplyr::pull(
+          .data$value
+        )
+
       se <- sqrt(
         rank_variance *
           (
@@ -283,6 +454,11 @@ dunn_holm <- function(
         lower.tail = FALSE
       )
 
+      r_rb <- rank_biserial_independent(
+        values1,
+        values2
+      )
+
       tibble::tibble(
         group1 = pair[1],
         group2 = pair[2],
@@ -291,7 +467,13 @@ dunn_holm <- function(
         mean_rank1 = g1$mean_rank,
         mean_rank2 = g2$mean_rank,
         z = z,
-        p = p
+        p = p,
+        rank_biserial = r_rb,
+        rank_biserial_abs = abs(
+          r_rb
+        ),
+        effect_direction =
+          "positive = group1 > group2; negative = group2 > group1"
       )
     }
   )
@@ -311,13 +493,13 @@ dunn_holm <- function(
 # ============================================================
 
 analyse_rank <- function(
-  data,
-  value_col,
-  rank_col,
-  threshold,
-  kingdom,
-  trait,
-  subset_label = "all"
+    data,
+    value_col,
+    rank_col,
+    threshold,
+    kingdom,
+    trait,
+    subset_label = "all"
 ) {
 
   taxon_counts <- data %>%
@@ -455,7 +637,7 @@ analyse_rank <- function(
   # Dunn post-hoc comparisons are performed only when the
   # omnibus Kruskal-Wallis test is significant.
   if (kw$p.value < alpha) {
-    
+
     dunn_tbl <- dunn_holm(
       d,
       value_col = value_col,
@@ -472,11 +654,11 @@ analyse_rank <- function(
         ),
         .before = 1
       )
-    
+
   } else {
-    
+
     dunn_tbl <- tibble::tibble()
-    
+
   }
 
   list(
@@ -535,6 +717,27 @@ gram_test <- stats::wilcox.test(
   exact = FALSE
 )
 
+# The effect is oriented GN relative to GP to match the order in
+# the comparison label and the Mann-Whitney U statistic.
+gram_effect <- bootstrap_rank_biserial(
+  x = bac_gram %>%
+    dplyr::filter(
+      .data$Gram == "GN"
+    ) %>%
+    dplyr::pull(
+      .data$MurA
+    ),
+  y = bac_gram %>%
+    dplyr::filter(
+      .data$Gram == "GP"
+    ) %>%
+    dplyr::pull(
+      .data$MurA
+    ),
+  R = effect_boot_R,
+  seed = effect_boot_seed
+)
+
 gram_summary <- bac_gram %>%
   dplyr::group_by(
     .data$Gram
@@ -570,6 +773,17 @@ trait_gram_test <- tibble::tibble(
     gram_test$statistic
   ),
   p = gram_test$p.value,
+  rank_biserial =
+    gram_effect$rank_biserial,
+  rank_biserial_ci_low =
+    gram_effect$rank_biserial_ci_low,
+  rank_biserial_ci_high =
+    gram_effect$rank_biserial_ci_high,
+  rank_biserial_abs = abs(
+    gram_effect$rank_biserial
+  ),
+  effect_direction =
+    "positive = GN > GP; negative = GP > GN",
   significant = gram_test$p.value < alpha
 )
 
@@ -578,14 +792,14 @@ trait_gram_test <- tibble::tibble(
 # ============================================================
 
 analyse_dataset <- function(
-  data,
-  value_col,
-  kingdom,
-  trait,
-  subset_label = "all",
-  ranks = names(
-    rank_thresholds
-  )
+    data,
+    value_col,
+    kingdom,
+    trait,
+    subset_label = "all",
+    ranks = names(
+      rank_thresholds
+    )
 ) {
 
   purrr::map(
@@ -673,8 +887,37 @@ trait_pairwise_summary <- trait_dunn_tests %>%
     ),
     percent_significant =
       100 *
-        .data$n_significant /
-        .data$n_pairwise,
+      .data$n_significant /
+      .data$n_pairwise,
+    median_abs_rank_biserial = stats::median(
+      abs(
+        .data$rank_biserial
+      ),
+      na.rm = TRUE
+    ),
+    median_abs_rank_biserial_significant = if (
+      any(
+        .data$significant,
+        na.rm = TRUE
+      )
+    ) {
+      stats::median(
+        abs(
+          .data$rank_biserial[
+            .data$significant
+          ]
+        ),
+        na.rm = TRUE
+      )
+    } else {
+      NA_real_
+    },
+    maximum_abs_rank_biserial = max(
+      abs(
+        .data$rank_biserial
+      ),
+      na.rm = TRUE
+    ),
     .groups = "drop"
   )
 

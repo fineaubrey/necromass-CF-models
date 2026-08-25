@@ -13,5 +13,6 @@ rB_conversion,rB_mass = rB_molar * MW_GLCN / MW_MURA
 NB_equation,NB = CFB * MS
 NF_equation,"NF = CFF * max(GS - rB_mass*MS, 0)"
 raw_output,fnecC_raw = 100*(NB + NF)/S
-sobol_target,"fnecC_bounded = min(fnecC_raw, 100)"
+sobol_targets,"Raw fnecC and fnecC_bounded = min(fnecC_raw, 100)"
+main_text_target,Bounded fnecC; raw indices retained for Appendix D
 row_filtering,None; complete Sobol matrix retained

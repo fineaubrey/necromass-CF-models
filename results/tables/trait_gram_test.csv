@@ -1,2 +1,2 @@
-comparison,trait,test,n_GN,n_GP,median_GN,median_GP,statistic_U,p,significant
-GN vs GP,MurA,Mann-Whitney U,182,262,3.2,21.925,3697.5,7.72124250935348e-52,TRUE
+comparison,trait,test,n_GN,n_GP,median_GN,median_GP,statistic_U,p,rank_biserial,rank_biserial_ci_low,rank_biserial_ci_high,rank_biserial_abs,effect_direction,significant
+GN vs GP,MurA,Mann-Whitney U,182,262,3.2,21.925,3697.5,7.72124250935348e-52,-0.8449165338478315,-0.8923538293767301,-0.7923197508598272,0.8449165338478315,positive = GN > GP; negative = GP > GN,TRUE

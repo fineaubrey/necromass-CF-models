@@ -23,8 +23,8 @@
 # - Carbon-mass calculations use molecular C fractions:
 #       MurA = 0.430
 #       GlcN = 0.402
-# - Empirical fnecC values are NOT capped at 100%; exceedances are
-#   retained and reported as diagnostics.
+# - Empirical outputs expressed as % SOC are not capped at 100%;
+#   exceedances are retained and reported as diagnostics.
 #
 # Outputs:
 #   data/derived/global_soils/global_soils_model_estimates_wide.csv
@@ -306,15 +306,18 @@ if (
 
 # ------------------------------------------------------------
 # Long-form data
+#
+# The shared output column is named generically because the
+# CF-based approaches estimate necromass carbon, whereas the
+# carbon-mass approaches quantify measured amino-sugar carbon.
+# All outputs are expressed as percentages of SOC.
 # ------------------------------------------------------------
 
 dat_long <- dat_wide %>%
   pivot_longer(
-    cols = all_of(
-      model_cols
-    ),
+    cols = all_of(model_cols),
     names_to = "method",
-    values_to = "f_necC"
+    values_to = "output_pct_SOC"
   ) %>%
   mutate(
     method = factor(
@@ -328,65 +331,63 @@ dat_long <- dat_wide %>%
 # ============================================================
 
 sum_F4 <- dat_long %>%
-  group_by(
-    method
-  ) %>%
+  group_by(method) %>%
   summarise(
     N = n(),
     
     median = median(
-      f_necC
+      output_pct_SOC
     ),
     
     q25 = quantile(
-      f_necC,
+      output_pct_SOC,
       0.25,
       names = FALSE
     ),
     
     q75 = quantile(
-      f_necC,
+      output_pct_SOC,
       0.75,
       names = FALSE
     ),
     
     p95 = quantile(
-      f_necC,
+      output_pct_SOC,
       0.95,
       names = FALSE
     ),
     
     p99 = quantile(
-      f_necC,
+      output_pct_SOC,
       0.99,
       names = FALSE
     ),
     
     p995 = quantile(
-      f_necC,
+      output_pct_SOC,
       0.995,
       names = FALSE
     ),
     
     over100_n = sum(
-      f_necC > 100
+      output_pct_SOC > 100
     ),
     
     over100_pct =
       100 *
       mean(
-        f_necC > 100
+        output_pct_SOC > 100
       ),
     
     maximum = max(
-      f_necC
+      output_pct_SOC
     ),
     
     .groups = "drop"
   )
 
 # ------------------------------------------------------------
-# Bootstrap 95% percentile CI for method median
+# Bootstrap 95% percentile CI for each method median
 # ------------------------------------------------------------
 
 boot_median <- function(
@@ -394,22 +395,18 @@ boot_median <- function(
     indices
 ) {
   median(
-    x[
-      indices
-    ]
+    x[indices]
   )
 }
 
 set.seed(42)
 
 median_ci <- dat_long %>%
-  group_split(
-    method
-  ) %>%
+  group_split(method) %>%
   purrr::map_dfr(
     function(df) {
       
-      x <- df$f_necC
+      x <- df$output_pct_SOC
       
       b <- boot::boot(
         data = x,
@@ -423,9 +420,7 @@ median_ci <- dat_long %>%
       )
       
       tibble(
-        method = unique(
-          df$method
-        ),
+        method = unique(df$method),
         
         median_lo =
           ci$percent[4],
@@ -477,16 +472,21 @@ readr::write_csv(
 method_labels_expr <- c(
   expression(CF[2006]),
   expression(CF[2024]),
-  expression(C[plain("MurA + GlcN")]),
-  expression(C[plain("GlcN")])
+  expression(plain("C,mass")[plain("MurA + GlcN")]),
+  expression(plain("C,mass")[plain("GlcN")])
 )
 
 # ============================================================
 # Dynamic plotting range
+#
+# The upper display limit is 110% of the pooled 99.5th
+# percentile, with a minimum upper limit of 110% SOC.
+# All observations remain in the saved data and numerical
+# summary statistics.
 # ============================================================
 
 plot_max <- quantile(
-  dat_long$f_necC,
+  dat_long$output_pct_SOC,
   0.995,
   na.rm = TRUE
 )
@@ -514,7 +514,7 @@ p4 <- ggplot(
   dat_long,
   aes(
     x = method,
-    y = f_necC,
+    y = output_pct_SOC,
     fill = method
   )
 ) +
@@ -592,9 +592,7 @@ p4 <- ggplot(
   
   labs(
     x = NULL,
-    y = expression(
-      italic(f)[necC] ~ "(% SOC)"
-    )
+    y = "Model output (% SOC)"
   ) +
   
   coord_cartesian(
@@ -642,7 +640,7 @@ p4 <- ggplot(
   )
 
 # ------------------------------------------------------------
-# % >100 labels
+# Percent exceeding the physical SOC boundary
 # ------------------------------------------------------------
 
 p4 <- p4 +
@@ -669,7 +667,7 @@ p4 <- p4 +
   )
 
 # ------------------------------------------------------------
-# Median + bootstrap CI labels
+# Median and bootstrap 95% CI labels
 # ------------------------------------------------------------
 
 p4 <- p4 +
@@ -699,9 +697,7 @@ p4 <- p4 +
     data =
       sum_F4 %>%
       filter(
-        !is.na(
-          median_lo
-        )
+        !is.na(median_lo)
       ),
     
     aes(
@@ -732,9 +728,7 @@ p4 <- p4 +
 # Display and save
 # ------------------------------------------------------------
 
-print(
-  p4
-)
+print(p4)
 
 ggsave(
   filename = here::here(
@@ -757,7 +751,7 @@ ggsave(
   ),
   plot = p4,
   width = 8,
-  height = 5,
+  height = 4.5,
   units = "in",
   device = grDevices::cairo_pdf
 )

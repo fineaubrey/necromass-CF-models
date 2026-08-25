@@ -1,37 +1,42 @@
 # ============================================================
-# Phase 3 — Statistical comparison among empirical models
+# Phase 3 — Statistical comparison among empirical calculation
+# approaches
 #
 # Input:
 #   data/derived/global_soils/global_soils_model_estimates_wide.csv
 #
-# Models:
+# Approaches:
 #   CF2006
 #   CF2024
 #   Cmass_MurAGlcN
 #   Cmass_GlcN
 #
 # Analyses:
-#   1. Friedman test, treating soil observations as blocks
+#   1. Friedman test of calculated outputs expressed as % SOC,
+#      treating soil observations as blocks
 #   2. Pairwise Wilcoxon signed-rank tests
 #   3. Holm correction across all six pairwise comparisons
-#   4. Median paired differences with bootstrap 95% CIs
+#   4. Median paired numerical differences with bootstrap 95% CIs
 #
 # Outputs:
 #   results/tables/global_soils_friedman_test.csv
 #   results/tables/global_soils_pairwise_comparisons.csv
 #
 # Notes:
-# - All tests are paired because each soil observation is evaluated
-#   with all four methods.
+# - All comparisons are paired because each soil observation is
+#   evaluated using all four calculation approaches.
+# - The CF-based and carbon-mass approaches quantify different
+#   quantities. These tests compare their numerical outputs when
+#   expressed on the common scale of % SOC; they do not evaluate
+#   accuracy or agreement with a common underlying measurand.
 # - Pairwise difference is always defined as:
 #
 #       method1 - method2
 #
 # - Bootstrap CIs are based on 10,000 resamples of the paired
 #   difference vector.
-# - No model outputs are capped or filtered here.
+# - No calculated outputs are capped or filtered here.
 # ============================================================
-
 options(scipen = 999)
 
 suppressPackageStartupMessages({
@@ -65,7 +70,7 @@ if (!file.exists(infile)) {
   stop(
     "Canonical model-estimate file not found: ",
     infile,
-    "\nRun 02_Fig6_global_soils_model_comparisons.R first."
+    "\nRun 02_Fig4_global_soils_model_comparisons.R first."
   )
 }
 
@@ -128,7 +133,7 @@ if (!all(finite_check)) {
 }
 
 n_obs <- nrow(dat)
-k_methods <- length(model_cols)
+k_approaches <- length(model_cols)
 
 message(
   "Paired soil observations: ",
@@ -136,13 +141,12 @@ message(
 )
 
 message(
-  "Methods: ",
+  "Approaches: ",
   paste(
     model_cols,
     collapse = ", "
   )
 )
-
 # ============================================================
 # 1. Friedman test
 # ============================================================
@@ -174,13 +178,13 @@ kendalls_W <- (
   friedman_chisq /
     (
       n_obs *
-        (k_methods - 1)
+        (k_approaches - 1)
     )
 )
 
 friedman_table <- tibble(
   N = n_obs,
-  Methods = k_methods,
+  Approaches = k_approaches,
   Chi_square = friedman_chisq,
   df = friedman_df,
   p_value = friedman_p,

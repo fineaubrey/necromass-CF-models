@@ -4,10 +4,17 @@ n_model_evaluations,28672.0
 seed,1234.0
 prop_GS_lt_MS,0.0016741071428571428
 prop_molecular_C_infeasible,0.0
+n_molecular_C_infeasible,0.0
 raw_median,49.53539114324427
 raw_p99,1029.6466778575111
 raw_max,4581.521252853501
 prop_raw_gt_100,0.2918178013392857
+n_raw_gt_100,8367.0
+raw_variance,43484.32648880365
 bounded_median,49.53539114324427
 bounded_max,100.0
 prop_at_upper_bound,0.2918178013392857
+bounded_variance,1256.7341073855216
+variance_ratio_bounded_to_raw,0.028900852533822862
+S1_rank_spearman_raw_vs_bounded,0.9999999999999999
+ST_rank_spearman_raw_vs_bounded,0.9999999999999999

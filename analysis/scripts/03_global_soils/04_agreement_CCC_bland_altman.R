@@ -40,7 +40,7 @@
 # ---------
 # This script does NOT recalculate the four models.
 # It uses the canonical estimates created by:
-#   02_Fig6_global_soils_model_comparisons.R
+#   02_Fig4_global_soils_model_comparisons.R
 # ============================================================
 
 options(scipen = 999)
@@ -207,10 +207,15 @@ method_labels <- c(
 # All six unique pairs
 # ------------------------------------------------------------
 
-pair_list <- combn(
-  methods,
-  2,
-  simplify = FALSE
+pair_list <- list(
+  c(
+    "CF2006",
+    "CF2024"
+  ),
+  c(
+    "Cmass_MurAGlcN",
+    "Cmass_GlcN"
+  )
 )
 
 # ============================================================
@@ -498,9 +503,9 @@ ba_summary_pair <- function(
     ),
     N = n,
     
-    bias = bias,
-    bias_ci_low = ci_bias[1],
-    bias_ci_high = ci_bias[2],
+    mean_difference = bias,
+    mean_difference_ci_low = ci_bias[1],
+    mean_difference_ci_high = ci_bias[2],
     
     SD_difference = sd_diff,
     
@@ -636,13 +641,9 @@ plot_bland_altman <- function(
     ) +
     
     labs(
-      title = unique(
-        df_pair$comparison
-      ),
-      x = "Mean of paired estimates (% SOC)",
-      y = expression(
-        Delta * italic(f)[necC] ~ "(% SOC)"
-      )
+      title = unique(df_pair$comparison),
+      x = "Mean of paired outputs (% SOC)",
+      y = "Paired difference (method 1 - method 2; percentage points of SOC)"
     ) +
     
     theme_sbb_small() +
@@ -706,14 +707,8 @@ ba_plots <- purrr::map(
 
 grid_plot <- (
   ba_plots[[1]] |
-    ba_plots[[2]] |
-    ba_plots[[3]]
-) /
-  (
-    ba_plots[[4]] |
-      ba_plots[[5]] |
-      ba_plots[[6]]
-  ) +
+    ba_plots[[2]]
+) +
   patchwork::plot_annotation(
     tag_levels = "A"
   )
