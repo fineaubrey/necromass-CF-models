@@ -151,9 +151,9 @@ In the source file:
 Open the repository as an RStudio project and run:
 
 ```r
-source("analysis/scripts/01_traits/01_trait_summary.R")
-source("analysis/scripts/01_traits/02_trait_statistics.R")
-source("analysis/scripts/01_traits/03_Fig2_trait_distributions.R")
+source("Scripts/R/01_traits/01_trait_summary.R")
+source("Scripts/R/01_traits/02_trait_statistics.R")
+source("Scripts/R/01_traits/03_Fig2_trait_distributions.R")
 ```
 
 These scripts summarize trait distributions, test taxonomic differences, and generate Figure 2.
@@ -293,7 +293,7 @@ The raw, unbounded output is retained for diagnostics.
 After running the GSA:
 
 ```r
-source("analysis/scripts/02_uncertainty_sensitivity/03_Fig3_sobol_indices.R")
+source("Scripts/R/02_uncertainty_sensitivity/03_Fig3_sobol_indices.R")
 ```
 
 ---
@@ -303,7 +303,7 @@ source("analysis/scripts/02_uncertainty_sensitivity/03_Fig3_sobol_indices.R")
 ### Step 1 — Prepare the analytical dataset
 
 ```r
-source("analysis/scripts/03_global_soils/01_prepare_global_soils.R")
+source("Scripts/R/03_global_soils/01_prepare_global_soils.R")
 ```
 
 This script:
@@ -322,7 +322,7 @@ data/derived/global_soils/Dataset2_analytical_sample.csv
 ### Step 2 — Apply empirical models and generate Figure 4
 
 ```r
-source("analysis/scripts/03_global_soils/02_Fig4_global_soils_model_comparisons.R")
+source("Scripts/R/03_global_soils/02_Fig4_global_soils_model_comparisons.R")
 ```
 
 Four empirical estimates are compared:
@@ -387,7 +387,7 @@ data/derived/global_soils/global_soils_model_estimates_long.csv
 Run:
 
 ```r
-source("analysis/scripts/03_global_soils/03_model_comparison_statistics.R")
+source("Scripts/R/03_global_soils/03_model_comparison_statistics.R")
 ```
 
 The script performs:
@@ -411,7 +411,7 @@ results/tables/global_soils_pairwise_comparisons.csv
 Run:
 
 ```r
-source("analysis/scripts/03_global_soils/04_agreement_CCC_bland_altman.R")
+source("Scripts/R/03_global_soils/04_agreement_CCC_bland_altman.R")
 ```
 
 The script calculates:
@@ -449,7 +449,7 @@ manuscript/figures/BlandAltman_grid.pdf
 Run:
 
 ```r
-source("analysis/scripts/03_global_soils/05_Fig5_structural_feasibility.R")
+source("Scripts/R/03_global_soils/05_Fig5_structural_feasibility.R")
 ```
 
 This figure evaluates the relationship among soil GlcN, SOC, and CF-derived necromass estimates.
@@ -477,9 +477,9 @@ A complete run can be performed in the following order.
 ### R: traits
 
 ```r
-source("analysis/scripts/01_traits/01_trait_summary.R")
-source("analysis/scripts/01_traits/02_trait_statistics.R")
-source("analysis/scripts/01_traits/03_Fig2_trait_distributions.R")
+source("Scripts/R/01_traits/01_trait_summary.R")
+source("Scripts/R/01_traits/02_trait_statistics.R")
+source("Scripts/R/01_traits/03_Fig2_trait_distributions.R")
 ```
 
 ### Python: LHS and GSA
@@ -493,17 +493,17 @@ python -m analysis.Python.run_gsa
 ### R: sensitivity figure
 
 ```r
-source("analysis/scripts/02_uncertainty_sensitivity/03_Fig3_sobol_indices.R")
+source("Scripts/R/02_uncertainty_sensitivity/03_Fig3_sobol_indices.R")
 ```
 
 ### R: global-soil analyses
 
 ```r
-source("analysis/scripts/03_global_soils/01_prepare_global_soils.R")
-source("analysis/scripts/03_global_soils/02_Fig4_global_soils_model_comparisons.R")
-source("analysis/scripts/03_global_soils/03_model_comparison_statistics.R")
-source("analysis/scripts/03_global_soils/04_agreement_CCC_bland_altman.R")
-source("analysis/scripts/03_global_soils/05_Fig5_structural_feasibility.R")
+source("Scripts/R/03_global_soils/01_prepare_global_soils.R")
+source("Scripts/R/03_global_soils/02_Fig4_global_soils_model_comparisons.R")
+source("Scripts/R/03_global_soils/03_model_comparison_statistics.R")
+source("Scripts/R/03_global_soils/04_agreement_CCC_bland_altman.R")
+source("Scripts/R/03_global_soils/05_Fig5_structural_feasibility.R")
 ```
 
 ---

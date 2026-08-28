@@ -4,7 +4,7 @@ Generate the canonical LHS uncertainty-propagation datasets.
 
 Repository location
 -------------------
-analysis/Python/generate_lhs.py
+scripts/Python/generate_lhs.py
 
 Run from repository root
 ------------------------

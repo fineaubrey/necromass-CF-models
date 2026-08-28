@@ -3,7 +3,7 @@ Canonical model definitions for the necromass-CF uncertainty analysis.
 
 Repository location
 -------------------
-analysis/Python/model_definitions.py
+scripts/Python/model_definitions.py
 
 Canonical inputs
 ----------------

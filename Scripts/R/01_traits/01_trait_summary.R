@@ -29,8 +29,9 @@ options(scipen = 999)
 
 source(
   here::here(
-    "analysis",
+    "scripts",
     "R",
+    "01_traits",
     "02_trait_data.R"
   )
 )
