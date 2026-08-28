@@ -9,8 +9,8 @@ This repository evaluates how microbial trait variability, conversion-factor par
 The workflow has three main components:
 
 1. **Microbial trait variability** — quantify variation in bacterial muramic acid (MurA) and fungal glucosamine (GlcN) traits.
-2. **Uncertainty propagation and global sensitivity analysis** — propagate trait and soil-input uncertainty through conversion-factor models using Latin hypercube sampling (LHS) and Sobol sensitivity analysis.
-3. **Global-soil application** — compare conversion-factor estimates with direct molecular-carbon accounting across a global soil dataset.
+2. **Uncertainty propagation and global sensitivity analysis** — propagate microbial-trait uncertainty and soil-input variability through conversion-factor models using Latin hypercube sampling (LHS) and Sobol sensitivity analysis.
+3. **Global-soil application** — compare conversion-factor estimates with molecule-level accounting of carbon directly contained in measured amino sugars across a global soil dataset.
 
 ---
 
@@ -33,14 +33,18 @@ necromass-CF-models/
 │
 ├── analysis/
 │   ├── diagnostics/
-│   ├── figures/
-│   │
-├── scripts/
+│   └── figures/
+│
+├── Scripts/
 │   ├── Python/
 │   │   ├── __init__.py
+│   │   ├── archive/
+│   │   │   ├── sobol_fnecC5_saltelli.py
+│   │   │   └── sobol_fnecC10_saltelli.py
 │   │   ├── model_definitions.py
 │   │   ├── generate_lhs.py
 │   │   ├── summarize_lhs.py
+│   │   ├── sobol_common.py
 │   │   ├── sobol_cfb.py
 │   │   ├── sobol_cff.py
 │   │   ├── sobol_nf.py
@@ -51,8 +55,8 @@ necromass-CF-models/
 │   ├── R/
 │   │   ├── 01_traits/
 │   │   │   ├── 00_setup.R
-│   │   |   ├── 01_trait_summary.R
-|   |   |   ├── 02_trait_data.R
+│   │   │   ├── 01_trait_summary.R
+│   │   │   ├── 02_trait_data.R
 │   │   │   ├── 02_trait_statistics.R
 │   │   │   └── 03_Fig2_trait_distributions.R
 │   │   │
@@ -65,7 +69,6 @@ necromass-CF-models/
 │   │       ├── 03_model_comparison_statistics.R
 │   │       ├── 04_agreement_CCC_bland_altman.R
 │   │       └── 05_Fig5_structural_feasibility.R
-│   │
 │
 ├── results/
 │   └── tables/
@@ -166,13 +169,13 @@ These scripts summarize trait distributions, test taxonomic differences, and gen
 From PowerShell, the RStudio Terminal, or another shell opened at the repository root:
 
 ```bash
-python -m analysis.Python.generate_lhs
+python -m Scripts.Python.generate_lhs
 ```
 
 Then summarize the LHS outputs:
 
 ```bash
-python -m analysis.Python.summarize_lhs
+python -m Scripts.Python.summarize_lhs
 ```
 
 Canonical LHS outputs are written to:
@@ -216,7 +219,7 @@ The LHS uncertainty-propagation analysis does **not** cap CF-derived `fnecC` at 
 Run all canonical Sobol analyses with:
 
 ```bash
-python -m analysis.Python.run_gsa
+python -m Scripts.Python.run_gsa
 ```
 
 Default Sobol base sample sizes are:
@@ -279,7 +282,15 @@ r_{B,\mathrm{molar}}
 \frac{MW_{\mathrm{GlcN}}}{MW_{\mathrm{MurA}}}
 ```
 
-For the SOC-normalized Sobol analyses, all Sobol rows are retained and the sensitivity target is physically bounded:
+For the SOC-normalized Sobol analyses, all Sobol rows are retained and the primary sensitivity target is the raw, unbounded response:
+
+```math
+f_{necC,\mathrm{raw}}
+=
+100\frac{N_B+N_F}{S}
+```
+
+As a robustness analysis, the sensitivity analysis is repeated after imposing a physical upper bound:
 
 ```math
 f_{necC,\mathrm{bounded}}
@@ -287,7 +298,7 @@ f_{necC,\mathrm{bounded}}
 \min(f_{necC,\mathrm{raw}},100)
 ```
 
-The raw, unbounded output is retained for diagnostics.
+Raw, unbounded results are used in the main-text analysis and Figure 3. Results after bounding at 100% of SOC are reported in Appendix D and used to evaluate whether imposing a physical upper limit alters the principal parameter rankings.
 
 ### Generate Figure 3
 
@@ -326,7 +337,7 @@ data/derived/global_soils/Dataset2_analytical_sample.csv
 source("Scripts/R/03_global_soils/02_Fig4_global_soils_model_comparisons.R")
 ```
 
-Four empirical estimates are compared:
+Four empirical quantities are calculated:
 
 #### Standard conversion-factor model
 
@@ -383,7 +394,7 @@ data/derived/global_soils/global_soils_model_estimates_long.csv
 
 ---
 
-## 5. Statistical comparison among empirical methods
+## 5. Paired numerical comparison among empirical outputs
 
 Run:
 
@@ -391,19 +402,15 @@ Run:
 source("Scripts/R/03_global_soils/03_model_comparison_statistics.R")
 ```
 
-The script performs:
-
-- Friedman test with soils treated as repeated blocks
-- pairwise Wilcoxon signed-rank tests
-- Holm correction across all six pairwise comparisons
-- bootstrap confidence intervals for median paired differences
+The script summarizes prespecified paired numerical differences among model outputs. It reports median paired differences with 10,000-resample bootstrap 95% confidence intervals. These comparisons quantify the magnitude and direction of numerical differences; they are not treated as tests of whether the models estimate the same underlying quantity.
 
 Results are written to:
 
 ```text
-results/tables/global_soils_friedman_test.csv
-results/tables/global_soils_pairwise_comparisons.csv
+results/tables/
 ```
+
+The exact output filenames are defined in `03_model_comparison_statistics.R`.
 
 ---
 
@@ -415,13 +422,15 @@ Run:
 source("Scripts/R/03_global_soils/04_agreement_CCC_bland_altman.R")
 ```
 
+Agreement diagnostics are restricted to comparisons between formulations intended to represent comparable quantities. CF-based necromass estimates and molecule-level carbon calculations are not interpreted as interchangeable estimates of the same pool.
+
 The script calculates:
 
 - Lin's concordance correlation coefficient (CCC)
 - 10,000-resample bootstrap CCC confidence intervals
-- Bland-Altman mean bias
+- Bland-Altman mean difference
 - 95% limits of agreement
-- bootstrap confidence intervals for bias and limits of agreement
+- bootstrap confidence intervals for the mean difference and limits of agreement
 
 For Bland-Altman comparisons:
 
@@ -431,7 +440,7 @@ For Bland-Altman comparisons:
 \mathrm{method1}-\mathrm{method2}
 ```
 
-so positive bias means method 1 tends to produce larger estimates.
+so a positive mean difference means method 1 tends to produce larger estimates.
 
 Outputs include:
 
@@ -486,9 +495,9 @@ source("Scripts/R/01_traits/03_Fig2_trait_distributions.R")
 ### Python: LHS and GSA
 
 ```bash
-python -m analysis.Python.generate_lhs
-python -m analysis.Python.summarize_lhs
-python -m analysis.Python.run_gsa
+python -m Scripts.Python.generate_lhs
+python -m Scripts.Python.summarize_lhs
+python -m Scripts.Python.run_gsa
 ```
 
 ### R: sensitivity figure
@@ -520,7 +529,7 @@ In particular:
 - The five-input composite model contains **no `rB` correction**.
 - The trait-resolved model does include an `rB` correction after molar-to-mass conversion.
 - Classical Sobol coordinates are varied independently through empirical marginal distributions.
-- SOC-normalized Sobol outputs are bounded at 100% for sensitivity analysis only.
+- The primary SOC-normalized Sobol analysis uses raw, unbounded outputs; bounding at 100% is evaluated as a robustness analysis.
 - Empirical global-soil estimates are not capped at 100%.
 - Dataset 2 amino-sugar concentrations are converted from `ug g^-1` to `mg g^-1` only once, during analytical-sample preparation.
 - Diagnostic and legacy scripts should be kept separate from the canonical workflow.
@@ -530,4 +539,3 @@ In particular:
 ## Citation
 
 Please cite the associated manuscript when using this code or derived outputs.
-
