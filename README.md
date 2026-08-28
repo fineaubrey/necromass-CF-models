@@ -50,7 +50,9 @@ necromass-CF-models/
 │   │
 │   ├── scripts/
 │   │   ├── 01_traits/
-│   │   │   ├── 01_trait_summary.R
+│   │   │   ├── 00_setup.R
+│   │   |   ├── 01_trait_summary.R
+|   |   |   ├── 02_trait_data.R
 │   │   │   ├── 02_trait_statistics.R
 │   │   │   └── 03_Fig2_trait_distributions.R
 │   │   │
