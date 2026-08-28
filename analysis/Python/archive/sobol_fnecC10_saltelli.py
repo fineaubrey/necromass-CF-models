@@ -1,28 +1,32 @@
 #!/usr/bin/env python3
 """
-Canonical Sobol GSA for the five-input composite fnecC model.
+Canonical Sobol GSA for the 10-input trait-resolved fnecC model.
 
 FINAL MODEL CHOICES
 -------------------
 1. MS and GS are sampled independently.
 2. NO GS >= MS constraint is imposed.
-3. NO rB correction is used in the composite formulation.
-4. Composite equations are:
+3. rB correction IS used here because this is the trait-resolved model.
+4. rB is sampled as a MOLAR GlcN:MurA ratio and converted to a MASS
+   ratio before correcting mass-based soil GlcN concentrations.
+5. Trait-resolved equations are:
+
+       CFB = cB / (MGP*fGP + MGN*(1-fGP))
+       CFF = cF / GF
 
        NB = CFB * MS
-       NF = CFF * GS
+
+       rB_mass = rB_molar * MW_GLCN / MW_MURA
+       GS_corr = max(GS - rB_mass*MS, 0)
+       NF = CFF * GS_corr
+
        fnecC_raw = 100 * (NB + NF) / S
 
-5. Sobol indices are calculated for both the raw and physically
-   bounded responses:
+6. For Sobol analysis only, fnecC is physically bounded at 100%:
 
        fnecC_bounded = min(fnecC_raw, 100)
 
-   The bounded response remains the canonical main-text target so
-   existing Figure 3 workflows remain unchanged. Raw indices are
-   retained for comparison in Appendix D.
-
-6. The complete Sobol sampling matrix is retained; no Sobol rows are
+7. The complete Sobol sampling matrix is retained; no Sobol rows are
    rejected or filtered.
 
 INPUT DISTRIBUTIONS
@@ -30,22 +34,20 @@ INPUT DISTRIBUTIONS
 Empirical marginal distributions are reconstructed from the canonical
 LHS output:
 
-    data/derived/lhs/fnecC5_lhs.csv
+    data/derived/lhs/fnecC10_lhs.csv
 
-The LHS source file may itself reflect feasibility filtering used during
-uncertainty propagation, but the Sobol analysis varies the five physical
-inputs independently through their empirical marginals.
+The Sobol analysis varies all 10 physical inputs independently through
+their empirical marginals. In particular, the row-wise relationship
+between MS, GS, and S in the LHS source file is NOT imposed on the
+Sobol matrix.
 
 RUN FROM REPOSITORY ROOT
 ------------------------
-python -m analysis.Python.sobol_fnecC5_saltelli
+python -m analysis.Python.sobol_fnecC10_saltelli
 
-OUTPUTS
--------
-data/derived/gsa/sobol_fnecC5_saltelli_summary.csv
-data/derived/gsa/sobol_fnecC5_raw_saltelli_summary.csv
-data/derived/gsa/sobol_fnecC5_raw_vs_bounded.csv
-data/derived/gsa/sobol_fnecC5_diagnostics.csv
+OUTPUT
+------
+data/derived/gsa/sobol_fnecC10_saltelli_summary.csv
 """
 
 import argparse
@@ -102,7 +104,7 @@ def make_invq(values):
 # =====================================================================
 
 def run_sobol(
-    n_base=4096,
+    n_base=8192,
     outdir=None,
     lhs_path=None,
     seed=1234,
@@ -110,7 +112,7 @@ def run_sobol(
     save_draws=True,
 ):
     """
-    Run the canonical five-input composite fnecC Sobol analysis.
+    Run the canonical 10-input trait-resolved fnecC Sobol analysis.
     """
     if not is_power_of_two(n_base):
         raise ValueError(
@@ -134,7 +136,7 @@ def run_sobol(
             / "data"
             / "derived"
             / "lhs"
-            / "fnecC5_lhs.csv"
+            / "fnecC10_lhs.csv"
         )
     else:
         lhs_path = Path(lhs_path)
@@ -146,21 +148,20 @@ def run_sobol(
 
     if not lhs_path.exists():
         raise FileNotFoundError(
-            f"Canonical composite LHS file not found: {lhs_path}"
+            f"Canonical trait-resolved LHS file not found: {lhs_path}"
         )
 
     print("=" * 72)
-    print("[fnecC5] Composite Sobol global sensitivity analysis")
+    print("[fnecC10] Trait-resolved Sobol global sensitivity analysis")
     print("=" * 72)
-    print("[fnecC5] LHS source        :", lhs_path)
-    print("[fnecC5] output directory :", outdir)
-    print("[fnecC5] base N           :", n_base)
-    print("[fnecC5] seed             :", seed)
-    print("[fnecC5] GS >= MS         : NO")
-    print("[fnecC5] rB correction    : NO")
-    print("[fnecC5] Sobol targets    : raw and bounded at 100%")
-    print("[fnecC5] Main-text target : unbounded fnecC")
-    print("[fnecC5] Supplemental robustness target  : bounded fnecC")
+    print("[fnecC10] LHS source        :", lhs_path)
+    print("[fnecC10] output directory :", outdir)
+    print("[fnecC10] base N           :", n_base)
+    print("[fnecC10] seed             :", seed)
+    print("[fnecC10] GS >= MS         : NO")
+    print("[fnecC10] rB correction    : YES (trait-resolved only)")
+    print("[fnecC10] rB units         : molar input -> mass correction")
+    print("[fnecC10] Sobol target     : fnecC bounded at 100%")
     print()
 
     # -----------------------------------------------------------------
@@ -169,17 +170,22 @@ def run_sobol(
 
     lhs = pd.read_csv(lhs_path)
 
-    parameter_names = [
+    source_names = [
         "MS",
         "GS",
         "S",
-        "CFB",
-        "CFF",
+        "cB",
+        "MGP",
+        "MGN",
+        "fGP",
+        "cF",
+        "GF",
+        "rB_molar",
     ]
 
     missing = [
         name
-        for name in parameter_names
+        for name in source_names
         if name not in lhs.columns
     ]
 
@@ -192,7 +198,7 @@ def run_sobol(
         name: make_invq(
             lhs[name].to_numpy()
         )
-        for name in parameter_names
+        for name in source_names
     }
 
     # -----------------------------------------------------------------
@@ -203,14 +209,32 @@ def run_sobol(
         "u_MS",
         "u_GS",
         "u_S",
-        "u_CFB",
-        "u_CFF",
+        "u_cB",
+        "u_MGP",
+        "u_MGN",
+        "u_fGP",
+        "u_cF",
+        "u_GF",
+        "u_rB",
+    ]
+
+    real_names = [
+        "MS",
+        "GS",
+        "S",
+        "cB",
+        "MGP",
+        "MGN",
+        "fGP",
+        "cF",
+        "GF",
+        "rB",
     ]
 
     problem = {
-        "num_vars": 5,
+        "num_vars": 10,
         "names": unit_names,
-        "bounds": [[0.0, 1.0]] * 5,
+        "bounds": [[0.0, 1.0]] * 10,
     }
 
     U = sobol_sample(
@@ -221,16 +245,16 @@ def run_sobol(
         seed=seed,
     )
 
-    expected_rows = n_base * (5 + 2)
+    expected_rows = n_base * (10 + 2)
 
-    if U.shape != (expected_rows, 5):
+    if U.shape != (expected_rows, 10):
         raise RuntimeError(
             "Unexpected Sobol sample shape. "
-            f"Expected {(expected_rows, 5)}, received {U.shape}."
+            f"Expected {(expected_rows, 10)}, received {U.shape}."
         )
 
     print(
-        "[fnecC5] model evaluations:",
+        "[fnecC10] model evaluations:",
         len(U)
     )
 
@@ -243,48 +267,78 @@ def run_sobol(
 
     params = pd.DataFrame({
         name: invq[name](U[:, i])
-        for i, name in enumerate(parameter_names)
+        for i, name in enumerate(source_names)
     })
 
     MS = params["MS"].to_numpy(dtype=float)
     GS = params["GS"].to_numpy(dtype=float)
     S = params["S"].to_numpy(dtype=float)
-    CFB = params["CFB"].to_numpy(dtype=float)
-    CFF = params["CFF"].to_numpy(dtype=float)
+
+    cB = params["cB"].to_numpy(dtype=float)
+    MGP = params["MGP"].to_numpy(dtype=float)
+    MGN = params["MGN"].to_numpy(dtype=float)
+    fGP = params["fGP"].to_numpy(dtype=float)
+
+    cF = params["cF"].to_numpy(dtype=float)
+    GF = params["GF"].to_numpy(dtype=float)
+    rB_molar = params["rB_molar"].to_numpy(dtype=float)
 
     if np.any(~np.isfinite(S)) or np.any(S <= 0):
         raise ValueError(
             "All sampled SOC values must be finite and > 0."
         )
 
+    if np.any(~np.isfinite(GF)) or np.any(GF <= 0):
+        raise ValueError(
+            "All sampled fungal GlcN contents must be finite and > 0."
+        )
+
     # -----------------------------------------------------------------
-    # Canonical composite model
-    #
-    # NO rB correction.
-    # NO subtraction from GS.
+    # Trait-resolved model
     # -----------------------------------------------------------------
+
+    CFB = md.CFB_fun(
+        cB,
+        MGP,
+        MGN,
+        fGP,
+    )
+
+    CFF = md.CFF_fun(
+        cF,
+        GF,
+    )
 
     NB = md.NB_fun(
         CFB,
         MS,
     )
 
-    # Composite formulation: NO bacterial GlcN correction.
-    NF = (
-        np.asarray(CFF, dtype=float)
-        * np.asarray(GS, dtype=float)
+    # rB is a MOLAR GlcN:MurA ratio, while MS and GS are mass
+    # concentrations. Convert before subtracting bacterial GlcN.
+    rB_mass = md.rb_molar_to_mass(
+        rB_molar
     )
 
-    total_nec_raw = NB + NF
+    GS_corr = np.maximum(
+        GS - rB_mass * MS,
+        0.0,
+    )
 
-    # Use the canonical shared model definition so the Sobol script
-    # cannot silently diverge from model_definitions.py.
-    fnecC_raw = md.fnecC_composite_raw(
-        MS=MS,
-        GS=GS,
-        S=S,
-        CFB=CFB,
-        CFF=CFF,
+    NF = (
+        np.asarray(CFF, dtype=float)
+        * GS_corr
+    )
+
+    total_nec_raw = (
+        np.asarray(NB, dtype=float)
+        + NF
+    )
+
+    fnecC_raw = (
+        100.0
+        * total_nec_raw
+        / S
     )
 
     # Physical bound used only as the Sobol response.
@@ -293,34 +347,17 @@ def run_sobol(
         100.0,
     )
 
-    if (
-        np.any(~np.isfinite(fnecC_raw))
-        or np.any(~np.isfinite(fnecC_bounded))
-    ):
+    if np.any(~np.isfinite(fnecC_bounded)):
         raise RuntimeError(
             "Non-finite Sobol outputs encountered. "
             "No rows were removed."
         )
 
     # -----------------------------------------------------------------
-    # Sobol analyses: raw and bounded responses
-    #
-    # Both analyses use the identical structured Sobol matrix. The
-    # only difference is the output transformation, which isolates the
-    # effect of bounding on the variance decomposition.
+    # Sobol analysis
     # -----------------------------------------------------------------
 
-    Si_raw = sobol_analyze(
-        problem,
-        fnecC_raw,
-        calc_second_order=False,
-        num_resamples=num_resamples,
-        conf_level=0.95,
-        print_to_console=False,
-        seed=seed,
-    )
-
-    Si_bounded = sobol_analyze(
+    Si = sobol_analyze(
         problem,
         fnecC_bounded,
         calc_second_order=False,
@@ -330,119 +367,41 @@ def run_sobol(
         seed=seed,
     )
 
-    summary_raw = pd.DataFrame({
-        "param": parameter_names,
-        "S1": Si_raw["S1"],
-        "S1_conf": Si_raw["S1_conf"],
-        "ST": Si_raw["ST"],
-        "ST_conf": Si_raw["ST_conf"],
+    summary = pd.DataFrame({
+        "param": real_names,
+        "S1": Si["S1"],
+        "S1_conf": Si["S1_conf"],
+        "ST": Si["ST"],
+        "ST_conf": Si["ST_conf"],
     })
 
-    summary_bounded = pd.DataFrame({
-        "param": parameter_names,
-        "S1": Si_bounded["S1"],
-        "S1_conf": Si_bounded["S1_conf"],
-        "ST": Si_bounded["ST"],
-        "ST_conf": Si_bounded["ST_conf"],
-    })
-
-    # Preserve the existing canonical filename for the bounded target
-    # so downstream Figure 3 code continues to work unchanged.
     summary_path = (
         outdir
-        / "sobol_fnecC5_saltelli_summary.csv"
+        / "sobol_fnecC10_saltelli_summary.csv"
     )
 
-    summary_bounded.to_csv(
+    summary.to_csv(
         summary_path,
         index=False,
     )
 
     np.savez(
         outdir
-        / "sobol_fnecC5_saltelli_Si.npz",
-        **Si_bounded,
-    )
-
-    raw_summary_path = (
-        outdir
-        / "sobol_fnecC5_raw_saltelli_summary.csv"
-    )
-
-    summary_raw.to_csv(
-        raw_summary_path,
-        index=False,
-    )
-
-    np.savez(
-        outdir
-        / "sobol_fnecC5_raw_saltelli_Si.npz",
-        **Si_raw,
-    )
-
-    comparison = pd.DataFrame({
-        "formulation": "composite",
-        "param": parameter_names,
-        "S1_raw": summary_raw["S1"],
-        "S1_raw_conf": summary_raw["S1_conf"],
-        "S1_bounded": summary_bounded["S1"],
-        "S1_bounded_conf": summary_bounded["S1_conf"],
-        "S1_change_bounded_minus_raw": (
-            summary_bounded["S1"]
-            - summary_raw["S1"]
-        ),
-        "ST_raw": summary_raw["ST"],
-        "ST_raw_conf": summary_raw["ST_conf"],
-        "ST_bounded": summary_bounded["ST"],
-        "ST_bounded_conf": summary_bounded["ST_conf"],
-        "ST_change_bounded_minus_raw": (
-            summary_bounded["ST"]
-            - summary_raw["ST"]
-        ),
-        "S1_rank_raw": summary_raw["S1"].rank(
-            ascending=False,
-            method="min",
-        ),
-        "S1_rank_bounded": summary_bounded["S1"].rank(
-            ascending=False,
-            method="min",
-        ),
-        "ST_rank_raw": summary_raw["ST"].rank(
-            ascending=False,
-            method="min",
-        ),
-        "ST_rank_bounded": summary_bounded["ST"].rank(
-            ascending=False,
-            method="min",
-        ),
-    })
-
-    comparison_path = (
-        outdir
-        / "sobol_fnecC5_raw_vs_bounded.csv"
-    )
-
-    comparison.to_csv(
-        comparison_path,
-        index=False,
+        / "sobol_fnecC10_saltelli_Si.npz",
+        **Si,
     )
 
     # -----------------------------------------------------------------
     # Diagnostics
     # -----------------------------------------------------------------
 
-    molecular_C_feasible = md.molecular_carbon_feasible(
-        MS,
-        GS,
-        S,
-    )
-
-    S1_rank_spearman = summary_raw["S1"].rank().corr(
-        summary_bounded["S1"].rank()
-    )
-
-    ST_rank_spearman = summary_raw["ST"].rank().corr(
-        summary_bounded["ST"].rank()
+    molecular_C_pct = (
+        100.0
+        * md.molecular_carbon(
+            MS,
+            GS,
+        )
+        / S
     )
 
     diagnostics = pd.DataFrame({
@@ -451,35 +410,28 @@ def run_sobol(
             "n_model_evaluations",
             "seed",
             "prop_GS_lt_MS",
-            "prop_molecular_C_infeasible",
-            "n_molecular_C_infeasible",
             "raw_median",
             "raw_p99",
             "raw_max",
             "prop_raw_gt_100",
-            "n_raw_gt_100",
-            "raw_variance",
             "bounded_median",
             "bounded_max",
             "prop_at_upper_bound",
-            "bounded_variance",
-            "variance_ratio_bounded_to_raw",
-            "S1_rank_spearman_raw_vs_bounded",
-            "ST_rank_spearman_raw_vs_bounded",
+            "prop_molecular_C_gt_S",
+            "rB_molar_min",
+            "rB_molar_max",
+            "rB_mass_min",
+            "rB_mass_max",
         ],
         "value": [
             n_base,
             len(fnecC_raw),
             seed,
             np.mean(GS < MS),
-            np.mean(~molecular_C_feasible),
-            np.sum(~molecular_C_feasible),
             np.median(fnecC_raw),
             np.quantile(fnecC_raw, 0.99),
             np.max(fnecC_raw),
             np.mean(fnecC_raw > 100.0),
-            np.sum(fnecC_raw > 100.0),
-            np.var(fnecC_raw, ddof=1),
             np.median(fnecC_bounded),
             np.max(fnecC_bounded),
             np.mean(
@@ -488,19 +440,19 @@ def run_sobol(
                     100.0,
                 )
             ),
-            np.var(fnecC_bounded, ddof=1),
-            (
-                np.var(fnecC_bounded, ddof=1)
-                / np.var(fnecC_raw, ddof=1)
+            np.mean(
+                molecular_C_pct > 100.0
             ),
-            S1_rank_spearman,
-            ST_rank_spearman,
+            np.min(rB_molar),
+            np.max(rB_molar),
+            np.min(rB_mass),
+            np.max(rB_mass),
         ],
     })
 
     diagnostics.to_csv(
         outdir
-        / "sobol_fnecC5_diagnostics.csv",
+        / "sobol_fnecC10_diagnostics.csv",
         index=False,
     )
 
@@ -514,13 +466,19 @@ def run_sobol(
             columns=unit_names,
         ).to_csv(
             outdir
-            / "sobol_fnecC5_draws_uniform.csv",
+            / "sobol_fnecC10_draws_uniform.csv",
             index=False,
         )
 
-        params.to_csv(
+        params_out = params.copy()
+        params_out["rB_mass"] = rB_mass
+        params_out["GS_corr"] = GS_corr
+        params_out["CFB"] = CFB
+        params_out["CFF"] = CFF
+
+        params_out.to_csv(
             outdir
-            / "sobol_fnecC5_draws_params.csv",
+            / "sobol_fnecC10_draws_params.csv",
             index=False,
         )
 
@@ -532,7 +490,7 @@ def run_sobol(
             "fnecC_bounded": fnecC_bounded,
         }).to_csv(
             outdir
-            / "sobol_fnecC5_outputs.csv",
+            / "sobol_fnecC10_outputs.csv",
             index=False,
         )
 
@@ -551,56 +509,51 @@ def run_sobol(
             "marginal_mapping",
             "GS_MS_constraint",
             "rB_correction",
-            "composite_NB",
-            "composite_NF",
+            "rB_units",
+            "rB_conversion",
+            "NB_equation",
+            "NF_equation",
             "raw_output",
-            "sobol_targets",
-            "main_text_target",
+            "sobol_target",
             "row_filtering",
         ],
         "details": [
-            "Canonical five-input composite fnecC Sobol GSA",
+            "Canonical 10-input trait-resolved fnecC Sobol GSA",
             str(n_base),
-            "5",
+            "10",
             "SALib.sample.sobol.sample",
             str(seed),
             "Independent unit-hypercube Sobol coordinates",
             (
                 "Each coordinate transformed independently through "
-                "its empirical marginal from fnecC5_lhs.csv"
+                "its empirical marginal from fnecC10_lhs.csv"
             ),
             "None; GS is NOT constrained to be >= MS",
-            "None",
+            "Applied only in trait-resolved model",
+            "rB sampled as molar GlcN:MurA ratio",
+            (
+                "rB_mass = rB_molar * MW_GLCN / MW_MURA"
+            ),
             "NB = CFB * MS",
-            "NF = CFF * GS",
+            (
+                "NF = CFF * max(GS - rB_mass*MS, 0)"
+            ),
             "fnecC_raw = 100*(NB + NF)/S",
-            "Raw fnecC and fnecC_bounded = min(fnecC_raw, 100)",
-            "Bounded fnecC; raw indices retained for Appendix D",
+            "fnecC_bounded = min(fnecC_raw, 100)",
             "None; complete Sobol matrix retained",
         ],
     })
 
     metadata.to_csv(
         outdir
-        / "sobol_fnecC5_metadata.csv",
+        / "sobol_fnecC10_metadata.csv",
         index=False,
     )
 
     print()
-    print("[fnecC5] Bounded Sobol indices (canonical main-text target)")
+    print("[fnecC10] Sobol indices")
     print(
-        summary_bounded.sort_values(
-            "ST",
-            ascending=False,
-        ).to_string(
-            index=False
-        )
-    )
-
-    print()
-    print("[fnecC5] Raw Sobol indices (Appendix D comparison)")
-    print(
-        summary_raw.sort_values(
+        summary.sort_values(
             "ST",
             ascending=False,
         ).to_string(
@@ -610,39 +563,19 @@ def run_sobol(
 
     print()
     print(
-        "[fnecC5] GS < MS diagnostic:",
+        "[fnecC10] GS < MS diagnostic:",
         f"{100 * np.mean(GS < MS):.2f}%"
     )
     print(
-        "[fnecC5] molecular-C input infeasible:",
-        (
-            f"{100 * np.mean(~molecular_C_feasible):.4f}%"
-        )
-    )
-    print(
-        "[fnecC5] raw fnecC > 100%:",
+        "[fnecC10] raw fnecC > 100%:",
         f"{100 * np.mean(fnecC_raw > 100.0):.2f}%"
     )
     print(
-        "[fnecC5] ST rank Spearman, raw vs bounded:",
-        f"{ST_rank_spearman:.4f}"
-    )
-    print(
-        "[fnecC5] saved:",
+        "[fnecC10] saved:",
         summary_path
     )
-    print(
-        "[fnecC5] saved:",
-        raw_summary_path
-    )
-    print(
-        "[fnecC5] saved:",
-        comparison_path
-    )
 
-    # Preserve the historical return signature using the bounded
-    # target, which remains the canonical main-text analysis.
-    return summary_bounded, Si_bounded, diagnostics
+    return summary, Si, diagnostics
 
 
 # =====================================================================
@@ -652,14 +585,14 @@ def run_sobol(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description=(
-            "Canonical Sobol GSA for the five-input composite fnecC model."
+            "Canonical Sobol GSA for the 10-input trait-resolved fnecC model."
         )
     )
 
     parser.add_argument(
         "--n_base",
         type=int,
-        default=4096,
+        default=8192,
     )
 
     parser.add_argument(
