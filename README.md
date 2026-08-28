@@ -32,10 +32,10 @@ necromass-CF-models/
 │       └── global_soils/
 │
 ├── analysis/
-│   ├── R/
-│   │   ├── 01_setup.R
-│   │   └── 02_trait_data.R
+│   ├── diagnostics/
+│   ├── figures/
 │   │
+├── scripts/
 │   ├── Python/
 │   │   ├── __init__.py
 │   │   ├── model_definitions.py
@@ -48,7 +48,7 @@ necromass-CF-models/
 │   │   ├── sobol_fnecC10_saltelli.py
 │   │   └── run_gsa.py
 │   │
-│   ├── scripts/
+│   ├── R/
 │   │   ├── 01_traits/
 │   │   │   ├── 00_setup.R
 │   │   |   ├── 01_trait_summary.R
@@ -66,7 +66,6 @@ necromass-CF-models/
 │   │       ├── 04_agreement_CCC_bland_altman.R
 │   │       └── 05_Fig5_structural_feasibility.R
 │   │
-│   └── figures/
 │
 ├── results/
 │   └── tables/
