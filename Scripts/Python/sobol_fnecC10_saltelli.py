@@ -27,9 +27,9 @@ FINAL MODEL CHOICES
 
        fnecC_bounded = min(fnecC_raw, 100)
 
-   The bounded response remains the canonical main-text target so
-   existing Figure 3 workflows remain unchanged. Raw indices are
-   retained for comparison in Appendix D.
+   The raw response is the primary main-text sensitivity target.
+   The bounded response is retained as a robustness analysis and is
+   reported alongside the raw analysis in Appendix C.
 
 7. The complete Sobol sampling matrix is retained; no Sobol rows are
    rejected or filtered.
@@ -42,9 +42,8 @@ LHS output:
     data/derived/lhs/fnecC10_lhs.csv
 
 The Sobol analysis varies all 10 physical inputs independently through
-their empirical marginals. In particular, the row-wise relationship
-between MS, GS, and S in the LHS source file is NOT imposed on the
-Sobol matrix.
+their empirical marginals. The row-wise relationship between MS, GS,
+and S in the LHS source file is NOT imposed on the Sobol matrix.
 
 RUN FROM REPOSITORY ROOT
 ------------------------
@@ -52,8 +51,8 @@ python -m analysis.Python.sobol_fnecC10_saltelli
 
 OUTPUTS
 -------
-data/derived/gsa/sobol_fnecC10_saltelli_summary.csv
 data/derived/gsa/sobol_fnecC10_raw_saltelli_summary.csv
+data/derived/gsa/sobol_fnecC10_bounded_saltelli_summary.csv
 data/derived/gsa/sobol_fnecC10_raw_vs_bounded.csv
 data/derived/gsa/sobol_fnecC10_diagnostics.csv
 """
@@ -122,6 +121,7 @@ def run_sobol(
     """
     Run the canonical 10-input trait-resolved fnecC Sobol analysis.
     """
+
     if not is_power_of_two(n_base):
         raise ValueError(
             f"n_base={n_base} is not a power of two. "
@@ -170,7 +170,8 @@ def run_sobol(
     print("[fnecC10] rB correction    : YES (trait-resolved only)")
     print("[fnecC10] rB units         : molar input -> mass correction")
     print("[fnecC10] Sobol targets    : raw and bounded at 100%")
-    print("[fnecC10] Main-text target : bounded at 100%")
+    print("[fnecC10] Main-text target : raw, unbounded fnecC")
+    print("[fnecC10] Robustness target: bounded fnecC")
     print()
 
     # -----------------------------------------------------------------
@@ -268,7 +269,7 @@ def run_sobol(
     )
 
     # -----------------------------------------------------------------
-    # Map each coordinate independently to its empirical marginal
+    # Map each coordinate independently to its empirical marginal.
     #
     # IMPORTANT:
     # There is intentionally NO GS >= MS transformation here.
@@ -344,13 +345,21 @@ def run_sobol(
         + NF
     )
 
-    fnecC_raw = (
-        100.0
-        * total_nec_raw
-        / S
+    # Use the shared canonical model definition for the raw response.
+    fnecC_raw = md.fnecC_trait_raw(
+        MS=MS,
+        GS=GS,
+        S=S,
+        cB=cB,
+        MGP=MGP,
+        MGN=MGN,
+        fGP=fGP,
+        cF=cF,
+        GF=GF,
+        rB_molar=rB_molar,
     )
 
-    # Physical bound used only as the Sobol response.
+    # Robustness response with explicit physical upper bound.
     fnecC_bounded = np.minimum(
         fnecC_raw,
         100.0,
@@ -368,9 +377,8 @@ def run_sobol(
     # -----------------------------------------------------------------
     # Sobol analyses: raw and bounded responses
     #
-    # Both analyses use the identical structured Sobol matrix. The
-    # only difference is the output transformation, which isolates the
-    # effect of bounding on the variance decomposition.
+    # Both analyses use the identical structured Sobol matrix.
+    # The only difference is the output transformation.
     # -----------------------------------------------------------------
 
     Si_raw = sobol_analyze(
@@ -409,23 +417,9 @@ def run_sobol(
         "ST_conf": Si_bounded["ST_conf"],
     })
 
-    # Preserve the existing canonical filename for the bounded target
-    # so downstream Figure 3 code continues to work unchanged.
-    summary_path = (
-        outdir
-        / "sobol_fnecC10_saltelli_summary.csv"
-    )
-
-    summary_bounded.to_csv(
-        summary_path,
-        index=False,
-    )
-
-    np.savez(
-        outdir
-        / "sobol_fnecC10_saltelli_Si.npz",
-        **Si_bounded,
-    )
+    # -----------------------------------------------------------------
+    # Save raw primary analysis
+    # -----------------------------------------------------------------
 
     raw_summary_path = (
         outdir
@@ -443,37 +437,71 @@ def run_sobol(
         **Si_raw,
     )
 
+    # -----------------------------------------------------------------
+    # Save bounded robustness analysis
+    # -----------------------------------------------------------------
+
+    bounded_summary_path = (
+        outdir
+        / "sobol_fnecC10_bounded_saltelli_summary.csv"
+    )
+
+    summary_bounded.to_csv(
+        bounded_summary_path,
+        index=False,
+    )
+
+    np.savez(
+        outdir
+        / "sobol_fnecC10_bounded_saltelli_Si.npz",
+        **Si_bounded,
+    )
+
+    # -----------------------------------------------------------------
+    # Raw-versus-bounded comparison
+    # -----------------------------------------------------------------
+
     comparison = pd.DataFrame({
         "formulation": "trait_resolved",
         "param": real_names,
+
         "S1_raw": summary_raw["S1"],
         "S1_raw_conf": summary_raw["S1_conf"],
+
         "S1_bounded": summary_bounded["S1"],
         "S1_bounded_conf": summary_bounded["S1_conf"],
+
         "S1_change_bounded_minus_raw": (
             summary_bounded["S1"]
             - summary_raw["S1"]
         ),
+
         "ST_raw": summary_raw["ST"],
         "ST_raw_conf": summary_raw["ST_conf"],
+
         "ST_bounded": summary_bounded["ST"],
         "ST_bounded_conf": summary_bounded["ST_conf"],
+
         "ST_change_bounded_minus_raw": (
             summary_bounded["ST"]
             - summary_raw["ST"]
         ),
+
         "S1_rank_raw": summary_raw["S1"].rank(
             ascending=False,
             method="min",
         ),
+
         "S1_rank_bounded": summary_bounded["S1"].rank(
             ascending=False,
             method="min",
         ),
+
         "ST_rank_raw": summary_raw["ST"].rank(
             ascending=False,
             method="min",
         ),
+
         "ST_rank_bounded": summary_bounded["ST"].rank(
             ascending=False,
             method="min",
@@ -580,6 +608,7 @@ def run_sobol(
     # -----------------------------------------------------------------
 
     if save_draws:
+
         pd.DataFrame(
             U,
             columns=unit_names,
@@ -590,6 +619,7 @@ def run_sobol(
         )
 
         params_out = params.copy()
+
         params_out["rB_mass"] = rB_mass
         params_out["GS_corr"] = GS_corr
         params_out["CFB"] = CFB
@@ -635,6 +665,8 @@ def run_sobol(
             "raw_output",
             "sobol_targets",
             "main_text_target",
+            "robustness_target",
+            "appendix_location",
             "row_filtering",
         ],
         "details": [
@@ -659,8 +691,13 @@ def run_sobol(
                 "NF = CFF * max(GS - rB_mass*MS, 0)"
             ),
             "fnecC_raw = 100*(NB + NF)/S",
-            "Raw fnecC and fnecC_bounded = min(fnecC_raw, 100)",
-            "Bounded fnecC; raw indices retained for Appendix D",
+            (
+                "Raw fnecC and "
+                "fnecC_bounded = min(fnecC_raw, 100)"
+            ),
+            "Raw, unbounded fnecC",
+            "fnecC bounded at 100% of SOC",
+            "Raw-versus-bounded comparison reported in Appendix C",
             "None; complete Sobol matrix retained",
         ],
     })
@@ -671,10 +708,14 @@ def run_sobol(
         index=False,
     )
 
+    # -----------------------------------------------------------------
+    # Console summary
+    # -----------------------------------------------------------------
+
     print()
-    print("[fnecC10] Bounded Sobol indices (canonical main-text target)")
+    print("[fnecC10] Raw Sobol indices (primary main-text target)")
     print(
-        summary_bounded.sort_values(
+        summary_raw.sort_values(
             "ST",
             ascending=False,
         ).to_string(
@@ -683,9 +724,9 @@ def run_sobol(
     )
 
     print()
-    print("[fnecC10] Raw Sobol indices (Appendix D comparison)")
+    print("[fnecC10] Bounded Sobol indices (robustness analysis)")
     print(
-        summary_raw.sort_values(
+        summary_bounded.sort_values(
             "ST",
             ascending=False,
         ).to_string(
@@ -698,34 +739,39 @@ def run_sobol(
         "[fnecC10] GS < MS diagnostic:",
         f"{100 * np.mean(GS < MS):.2f}%"
     )
+
     print(
         "[fnecC10] molecular-C input infeasible:",
         f"{100 * np.mean(~molecular_C_feasible):.4f}%"
     )
+
     print(
         "[fnecC10] raw fnecC > 100%:",
         f"{100 * np.mean(fnecC_raw > 100.0):.2f}%"
     )
+
     print(
         "[fnecC10] ST rank Spearman, raw vs bounded:",
         f"{ST_rank_spearman:.4f}"
     )
-    print(
-        "[fnecC10] saved:",
-        summary_path
-    )
+
     print(
         "[fnecC10] saved:",
         raw_summary_path
     )
+
+    print(
+        "[fnecC10] saved:",
+        bounded_summary_path
+    )
+
     print(
         "[fnecC10] saved:",
         comparison_path
     )
 
-    # Preserve the historical return signature using the bounded
-    # target, which remains the canonical main-text analysis.
-    return summary_bounded, Si_bounded, diagnostics
+    # Primary return object now matches the main-text sensitivity target.
+    return summary_raw, Si_raw, diagnostics
 
 
 # =====================================================================
@@ -733,6 +779,7 @@ def run_sobol(
 # =====================================================================
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(
         description=(
             "Canonical Sobol GSA for the 10-input trait-resolved fnecC model."

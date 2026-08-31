@@ -1,0 +1,4 @@
+variable_1,variable_1_description,variable_2,variable_2_description,N,spearman_rho,p_value,rho_rounded,p_formatted
+M_S,Soil muramic acid,G_S,Soil glucosamine,1604,0.818643905909372,0.0,0.819,<0.001
+M_S,Soil muramic acid,S,Soil organic carbon,1604,0.6452119413630262,1.6155795806537168e-189,0.645,<0.001
+G_S,Soil glucosamine,S,Soil organic carbon,1604,0.6759804165822468,1.192024418339285e-214,0.676,<0.001

@@ -14,5 +14,7 @@ NB_equation,NB = CFB * MS
 NF_equation,"NF = CFF * max(GS - rB_mass*MS, 0)"
 raw_output,fnecC_raw = 100*(NB + NF)/S
 sobol_targets,"Raw fnecC and fnecC_bounded = min(fnecC_raw, 100)"
-main_text_target,Bounded fnecC; raw indices retained for Appendix D
+main_text_target,"Raw, unbounded fnecC"
+robustness_target,fnecC bounded at 100% of SOC
+appendix_location,Raw-versus-bounded comparison reported in Appendix C
 row_filtering,None; complete Sobol matrix retained

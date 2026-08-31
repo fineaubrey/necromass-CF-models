@@ -4,8 +4,13 @@
 # Inputs:
 #   data/derived/gsa/sobol_CFB_saltelli_summary.csv
 #   data/derived/gsa/sobol_NF_saltelli_summary.csv
-#   data/derived/gsa/sobol_fnecC5_saltelli_summary.csv
-#   data/derived/gsa/sobol_fnecC10_saltelli_summary.csv
+#   data/derived/gsa/sobol_fnecC5_raw_saltelli_summary.csv
+#   data/derived/gsa/sobol_fnecC10_raw_saltelli_summary.csv
+#
+# Supplemental / robustness:
+#   data/derived/gsa/sobol_CFF_saltelli_summary.csv
+#   data/derived/gsa/sobol_fnecC5_bounded_saltelli_summary.csv
+#   data/derived/gsa/sobol_fnecC10_bounded_saltelli_summary.csv
 #
 # Supplemental:
 #   data/derived/gsa/sobol_CFF_saltelli_summary.csv
@@ -26,13 +31,7 @@ suppressPackageStartupMessages({
   library(here)
 })
 
-source(
-  here::here(
-    "analysis",
-    "R",
-    "01_setup.R"
-  )
-)
+
 
 gsa_dir <- here::here(
   "data",
@@ -130,13 +129,13 @@ sobol_nf <- prepare_sobol(
 
 sobol_f5 <- prepare_sobol(
   read_sobol(
-    "sobol_fnecC5_saltelli_summary.csv"
+    "sobol_fnecC5_raw_saltelli_summary.csv"
   )
 )
 
 sobol_f10 <- prepare_sobol(
   read_sobol(
-    "sobol_fnecC10_saltelli_summary.csv"
+    "sobol_fnecC10_raw_saltelli_summary.csv"
   )
 )
 
@@ -305,7 +304,7 @@ pA <- build_panel(
   sobol_cfb,
   labels_cfb,
   expression(
-    "Bacterial conversion factor" ~ (CF[B])
+    "Bacterial conversion factor" ~ italic((CF[B]))
   )
 )
 
@@ -313,7 +312,7 @@ pB <- build_panel(
   sobol_nf,
   labels_nf,
   expression(
-    "Fungal necromass carbon" ~ (N[F])
+    "Fungal necromass carbon" ~ italic ((N[F]))
   )
 )
 
@@ -321,7 +320,7 @@ pC <- build_panel(
   sobol_f5,
   labels_f5,
   expression(
-    "Composite" ~ italic(f)[necC]
+    "Composite" ~ italic((f)[necC])
   )
 )
 
@@ -329,7 +328,7 @@ pD <- build_panel(
   sobol_f10,
   labels_f10,
   expression(
-    "Trait-resolved" ~ italic(f)[necC]
+    "Trait-resolved" ~ italic((f)[necC])
   )
 )
 

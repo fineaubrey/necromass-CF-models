@@ -1,0 +1,94 @@
+group,n_group,biomarker,subset,rank
+Actinomycetota,139,Bacterial MurA,All bacteria,Phylum
+Firmicutes,122,Bacterial MurA,All bacteria,Phylum
+Pseudomonadota,161,Bacterial MurA,All bacteria,Phylum
+Ascomycota,546,Fungal GlcN,All fungi,Phylum
+Basidiomycota,192,Fungal GlcN,All fungi,Phylum
+Actinomycetia,138,Bacterial MurA,All bacteria,Class
+Bacilli,109,Bacterial MurA,All bacteria,Class
+Gammaproteobacteria,150,Bacterial MurA,All bacteria,Class
+Agaricomycetes,189,Fungal GlcN,All fungi,Class
+Dothideomycetes,50,Fungal GlcN,All fungi,Class
+Eurotiomycetes,150,Fungal GlcN,All fungi,Class
+Leotiomycetes,47,Fungal GlcN,All fungi,Class
+Mucoromycetes,32,Fungal GlcN,All fungi,Class
+Saccharomycetes,57,Fungal GlcN,All fungi,Class
+Sordariomycetes,192,Fungal GlcN,All fungi,Class
+Bacillales,74,Bacterial MurA,All bacteria,Order
+Enterobacterales,59,Bacterial MurA,All bacteria,Order
+Lactobacillales,33,Bacterial MurA,All bacteria,Order
+Legionellales,26,Bacterial MurA,All bacteria,Order
+Micrococcales,62,Bacterial MurA,All bacteria,Order
+Pseudomonadales,38,Bacterial MurA,All bacteria,Order
+Vibrionales,24,Bacterial MurA,All bacteria,Order
+Agaricales,94,Fungal GlcN,All fungi,Order
+Boletales,40,Fungal GlcN,All fungi,Order
+Eurotiales,103,Fungal GlcN,All fungi,Order
+Glomerellales,24,Fungal GlcN,All fungi,Order
+Heliotales,43,Fungal GlcN,All fungi,Order
+Hypocreales,81,Fungal GlcN,All fungi,Order
+Mucorales,32,Fungal GlcN,All fungi,Order
+Onygenales,45,Fungal GlcN,All fungi,Order
+Pleosporales,42,Fungal GlcN,All fungi,Order
+Polyporales,25,Fungal GlcN,All fungi,Order
+Saccharomycetales,58,Fungal GlcN,All fungi,Order
+Sordariales,74,Fungal GlcN,All fungi,Order
+Arthrobacter,18,Bacterial MurA,All bacteria,Genus
+Bacillus,50,Bacterial MurA,All bacteria,Genus
+Clostridium,13,Bacterial MurA,All bacteria,Genus
+Corynebacterium,17,Bacterial MurA,All bacteria,Genus
+Enterobacter,12,Bacterial MurA,All bacteria,Genus
+Escherichia,16,Bacterial MurA,All bacteria,Genus
+Frankia,12,Bacterial MurA,All bacteria,Genus
+Legionella,19,Bacterial MurA,All bacteria,Genus
+Micrococcus,38,Bacterial MurA,All bacteria,Genus
+Mycobacterium,16,Bacterial MurA,All bacteria,Genus
+Pseudomonas,37,Bacterial MurA,All bacteria,Genus
+Staphylococcus,22,Bacterial MurA,All bacteria,Genus
+Streptococcus,23,Bacterial MurA,All bacteria,Genus
+Streptomyces,13,Bacterial MurA,All bacteria,Genus
+Vibrio,24,Bacterial MurA,All bacteria,Genus
+Agaricus,11,Fungal GlcN,All fungi,Genus
+Alternaria,18,Fungal GlcN,All fungi,Genus
+Aspergillus,69,Fungal GlcN,All fungi,Genus
+Blastomyces,14,Fungal GlcN,All fungi,Genus
+Candida,15,Fungal GlcN,All fungi,Genus
+Colletotrichum,16,Fungal GlcN,All fungi,Genus
+Fusarium,47,Fungal GlcN,All fungi,Genus
+Geotrichum,17,Fungal GlcN,All fungi,Genus
+Hebeloma,29,Fungal GlcN,All fungi,Genus
+Helicodendron,31,Fungal GlcN,All fungi,Genus
+Histoplasma,15,Fungal GlcN,All fungi,Genus
+Morchella,14,Fungal GlcN,All fungi,Genus
+Neurospora,72,Fungal GlcN,All fungi,Genus
+Penicillium,16,Fungal GlcN,All fungi,Genus
+Pisolithus,17,Fungal GlcN,All fungi,Genus
+Rhizopus,19,Fungal GlcN,All fungi,Genus
+Russula,13,Fungal GlcN,All fungi,Genus
+Saccharomyces,34,Fungal GlcN,All fungi,Genus
+Trichoderma,12,Fungal GlcN,All fungi,Genus
+Bacillus subtilis,21,Bacterial MurA,All bacteria,Species_Strain
+Escherichia coli,16,Bacterial MurA,All bacteria,Species_Strain
+Frankia sp.,12,Bacterial MurA,All bacteria,Species_Strain
+Legionella pneumophila,11,Bacterial MurA,All bacteria,Species_Strain
+Micrococcus luteus,14,Bacterial MurA,All bacteria,Species_Strain
+Staphylococcus aureus,11,Bacterial MurA,All bacteria,Species_Strain
+Streptococcus mutans,12,Bacterial MurA,All bacteria,Species_Strain
+Vibrio fetus intestinalis,12,Bacterial MurA,All bacteria,Species_Strain
+Vibrio fetus veneralis,12,Bacterial MurA,All bacteria,Species_Strain
+Aspergillus niger,19,Fungal GlcN,All fungi,Species_Strain
+Aspergillus oryzae,22,Fungal GlcN,All fungi,Species_Strain
+Blastomyces dermatitidis,14,Fungal GlcN,All fungi,Species_Strain
+Fusarium oxysporum,32,Fungal GlcN,All fungi,Species_Strain
+Geotrichum candidum,14,Fungal GlcN,All fungi,Species_Strain
+Hebeloma cylindrosporum,29,Fungal GlcN,All fungi,Species_Strain
+Histoplasma capsulatum,15,Fungal GlcN,All fungi,Species_Strain
+Morchella sp.,12,Fungal GlcN,All fungi,Species_Strain
+Neurospora crassa,66,Fungal GlcN,All fungi,Species_Strain
+Pisolithus tinctorius,17,Fungal GlcN,All fungi,Species_Strain
+Russula sp.,12,Fungal GlcN,All fungi,Species_Strain
+Saccharomyces cerevisiae,33,Fungal GlcN,All fungi,Species_Strain
+Actinomycetota,137,Bacterial MurA,Gram-positive only,Phylum
+Firmicutes,122,Bacterial MurA,Gram-positive only,Phylum
+Actinomycetia,136,Bacterial MurA,Gram-positive only,Class
+Bacilli,109,Bacterial MurA,Gram-positive only,Class

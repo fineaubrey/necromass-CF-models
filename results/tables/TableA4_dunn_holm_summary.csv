@@ -1,0 +1,10 @@
+biomarker,subset,rank,n_comparisons,n_significant,prop_significant,percent_significant
+Bacterial MurA,All bacteria,Class,3,2,0.6666666666666666,66.7
+Bacterial MurA,All bacteria,Genus,105,39,0.37142857142857144,37.1
+Bacterial MurA,All bacteria,Order,21,15,0.7142857142857143,71.4
+Bacterial MurA,All bacteria,Phylum,3,2,0.6666666666666666,66.7
+Bacterial MurA,All bacteria,Species_Strain,36,17,0.4722222222222222,47.2
+Fungal GlcN,All fungi,Class,21,14,0.6666666666666666,66.7
+Fungal GlcN,All fungi,Genus,171,62,0.36257309941520466,36.3
+Fungal GlcN,All fungi,Order,66,36,0.5454545454545454,54.5
+Fungal GlcN,All fungi,Species_Strain,66,27,0.4090909090909091,40.9

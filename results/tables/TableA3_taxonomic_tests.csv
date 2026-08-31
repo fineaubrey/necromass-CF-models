@@ -1,0 +1,14 @@
+biomarker,subset,comparison_rank,N,n_groups,test,statistic,df,p,p_formatted,n_posthoc,n_significant,prop_significant,significant_pairs
+Bacterial MurA,All bacteria,GP vs GN,444,2,Mann-Whitney U,3697.5,NA,7.677197014949798e-52,7.68e-52,NA,NA,NA,NA
+Bacterial MurA,All bacteria,Phylum,422,3,Kruskal-Wallis,214.411,2,2.761623752969541e-47,2.76e-47,3,2,0.6666666666666666,2/3 (66.7%)
+Fungal GlcN,All fungi,Phylum,738,2,Kruskal-Wallis,1.852,1,0.1735856142600603,0.174,NA,NA,NA,Not performed
+Bacterial MurA,All bacteria,Class,397,3,Kruskal-Wallis,214.264,2,2.973388805542018e-47,2.97e-47,3,2,0.6666666666666666,2/3 (66.7%)
+Fungal GlcN,All fungi,Class,717,7,Kruskal-Wallis,145.309,6,7.584086110611048e-29,7.58e-29,21,14,0.6666666666666666,14/21 (66.7%)
+Bacterial MurA,All bacteria,Order,316,7,Kruskal-Wallis,196.475,6,1.067386542864263e-39,1.07e-39,21,15,0.7142857142857143,15/21 (71.4%)
+Fungal GlcN,All fungi,Order,661,12,Kruskal-Wallis,237.363,11,1.2298988155099066e-44,1.23e-44,66,36,0.5454545454545454,36/66 (54.5%)
+Bacterial MurA,All bacteria,Genus,330,15,Kruskal-Wallis,193.579,14,1.1217923976827308e-33,1.12e-33,105,39,0.37142857142857144,39/105 (37.1%)
+Fungal GlcN,All fungi,Genus,479,19,Kruskal-Wallis,232.957,18,2.3398496145843943e-39,2.34e-39,171,62,0.36257309941520466,62/171 (36.3%)
+Bacterial MurA,All bacteria,Species_Strain,121,9,Kruskal-Wallis,95.505,8,3.530363593549626e-17,3.53e-17,36,17,0.4722222222222222,17/36 (47.2%)
+Fungal GlcN,All fungi,Species_Strain,285,12,Kruskal-Wallis,155.254,11,1.2554485829866715e-27,1.26e-27,66,27,0.4090909090909091,27/66 (40.9%)
+Bacterial MurA,Gram-positive only,Phylum,259,2,Kruskal-Wallis,0.372,1,0.5419436308264174,0.542,NA,NA,NA,Not performed
+Bacterial MurA,Gram-positive only,Class,245,2,Kruskal-Wallis,2.043,1,0.15286412433524327,0.153,NA,NA,NA,Not performed

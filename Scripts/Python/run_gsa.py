@@ -4,7 +4,7 @@ Run the complete canonical Sobol global sensitivity workflow.
 
 Run from repository root
 ------------------------
-python -m analysis.Python.run_gsa
+python -m scripts.Python.run_gsa
 
 Canonical analyses
 ------------------
@@ -17,17 +17,22 @@ Canonical analyses
 Final methodological choices
 ----------------------------
 - CFB, CFF, and NF use the canonical standalone Sobol scripts.
+
 - Composite fnecC:
     * MS and GS sampled independently
     * NO GS >= MS constraint
     * NO rB correction
-    * bounded fnecC is the Sobol target
+    * raw, unbounded fnecC is the primary Sobol target
+    * fnecC bounded at 100% is a robustness target
+
 - Trait-resolved fnecC:
     * MS and GS sampled independently
     * NO GS >= MS constraint
     * rB correction IS applied
     * rB sampled as a molar ratio and converted to a mass ratio
-    * bounded fnecC is the Sobol target
+    * raw, unbounded fnecC is the primary Sobol target
+    * fnecC bounded at 100% is a robustness target
+
 - No structured Sobol rows are deleted.
 
 Default base sample sizes
@@ -42,12 +47,16 @@ Outputs
 -------
 data/derived/gsa/
 
-Expected summary files:
+Expected primary summary files:
     sobol_CFB_saltelli_summary.csv
     sobol_CFF_saltelli_summary.csv
     sobol_NF_saltelli_summary.csv
-    sobol_fnecC5_saltelli_summary.csv
-    sobol_fnecC10_saltelli_summary.csv
+    sobol_fnecC5_raw_saltelli_summary.csv
+    sobol_fnecC10_raw_saltelli_summary.csv
+
+Expected robustness summary files:
+    sobol_fnecC5_bounded_saltelli_summary.csv
+    sobol_fnecC10_bounded_saltelli_summary.csv
 """
 
 import argparse
@@ -77,33 +86,45 @@ GSA_DIR = (
 ANALYSES = [
     {
         "label": "CFB",
-        "module": "analysis.Python.sobol_cfb",
+        "module": "scripts.Python.sobol_cfb",
         "default_n": 4096,
-        "summary": "sobol_CFB_saltelli_summary.csv",
+        "summaries": [
+            "sobol_CFB_saltelli_summary.csv",
+        ],
     },
     {
         "label": "CFF",
-        "module": "analysis.Python.sobol_cff",
+        "module": "scripts.Python.sobol_cff",
         "default_n": 4096,
-        "summary": "sobol_CFF_saltelli_summary.csv",
+        "summaries": [
+            "sobol_CFF_saltelli_summary.csv",
+        ],
     },
     {
         "label": "NF",
-        "module": "analysis.Python.sobol_nf",
+        "module": "scripts.Python.sobol_nf",
         "default_n": 4096,
-        "summary": "sobol_NF_saltelli_summary.csv",
+        "summaries": [
+            "sobol_NF_saltelli_summary.csv",
+        ],
     },
     {
         "label": "Composite fnecC",
-        "module": "analysis.Python.sobol_fnecC5_saltelli",
+        "module": "scripts.Python.sobol_fnecC5_saltelli",
         "default_n": 4096,
-        "summary": "sobol_fnecC5_saltelli_summary.csv",
+        "summaries": [
+            "sobol_fnecC5_raw_saltelli_summary.csv",
+            "sobol_fnecC5_bounded_saltelli_summary.csv",
+        ],
     },
     {
         "label": "Trait-resolved fnecC",
-        "module": "analysis.Python.sobol_fnecC10_saltelli",
+        "module": "scripts.Python.sobol_fnecC10_saltelli",
         "default_n": 8192,
-        "summary": "sobol_fnecC10_saltelli_summary.csv",
+        "summaries": [
+            "sobol_fnecC10_raw_saltelli_summary.csv",
+            "sobol_fnecC10_bounded_saltelli_summary.csv",
+        ],
     },
 ]
 
@@ -116,6 +137,7 @@ def run_module(module, n_base):
     """
     Run one canonical Sobol module using the current Python interpreter.
     """
+
     cmd = [
         sys.executable,
         "-m",
@@ -135,47 +157,6 @@ def run_module(module, n_base):
         cwd=REPO_ROOT,
         check=True,
     )
-
-
-def check_expected_outputs():
-    """
-    Verify that each canonical summary file exists after the run.
-    """
-    print()
-    print("=" * 78)
-    print("OUTPUT CHECK")
-    print("=" * 78)
-
-    missing = []
-
-    for analysis in ANALYSES:
-        path = (
-            GSA_DIR
-            / analysis["summary"]
-        )
-
-        if path.exists():
-            print(
-                "[OK] ",
-                analysis["label"],
-                ": ",
-                path.relative_to(REPO_ROOT),
-                sep="",
-            )
-        else:
-            print(
-                "[MISSING] ",
-                analysis["label"],
-                ": ",
-                path.relative_to(REPO_ROOT),
-                sep="",
-            )
-            missing.append(path)
-
-    if missing:
-        raise FileNotFoundError(
-            "One or more expected GSA summary files were not created."
-        )
 
 
 # ---------------------------------------------------------------------
@@ -211,15 +192,20 @@ def main(
     print("=" * 78)
     print("CANONICAL GLOBAL SENSITIVITY ANALYSIS")
     print("=" * 78)
+
     print("Repository root :", REPO_ROOT)
     print("Output directory:", GSA_DIR)
     print("Standard base N :", n_base_standard)
     print("Trait base N    :", n_base_trait)
+
     print()
+
     print("Final fnecC choices:")
     print("  Composite:      independent GS/MS; NO rB correction")
     print("  Trait-resolved: independent GS/MS; rB correction YES")
-    print("  Sobol target:   fnecC bounded at 100%")
+    print("  Primary target: raw, unbounded fnecC")
+    print("  Robustness:     fnecC bounded at 100%")
+
     print()
 
     for analysis in ANALYSES:
@@ -244,7 +230,10 @@ def main(
             n_base=n_base,
         )
 
-    # Only require outputs for analyses that were not explicitly skipped.
+    # -----------------------------------------------------------------
+    # Verify expected outputs
+    # -----------------------------------------------------------------
+
     print()
     print("=" * 78)
     print("OUTPUT CHECK")
@@ -259,28 +248,34 @@ def main(
         if skip_lookup[label]:
             continue
 
-        path = (
-            GSA_DIR
-            / analysis["summary"]
-        )
+        for summary in analysis["summaries"]:
 
-        if path.exists():
-            print(
-                "[OK] ",
-                label,
-                ": ",
-                path.relative_to(REPO_ROOT),
-                sep="",
+            path = (
+                GSA_DIR
+                / summary
             )
-        else:
-            print(
-                "[MISSING] ",
-                label,
-                ": ",
-                path.relative_to(REPO_ROOT),
-                sep="",
-            )
-            missing.append(path)
+
+            if path.exists():
+
+                print(
+                    "[OK] ",
+                    label,
+                    ": ",
+                    path.relative_to(REPO_ROOT),
+                    sep="",
+                )
+
+            else:
+
+                print(
+                    "[MISSING] ",
+                    label,
+                    ": ",
+                    path.relative_to(REPO_ROOT),
+                    sep="",
+                )
+
+                missing.append(path)
 
     if missing:
         raise FileNotFoundError(
@@ -292,11 +287,35 @@ def main(
     print("GSA WORKFLOW COMPLETE")
     print("=" * 78)
     print()
+
     print(
-        "Next step: regenerate Figure 3 from the summary CSV files in"
+        "Primary Figure 3 fnecC inputs:"
     )
+
     print(
         "  data/derived/gsa/"
+        "sobol_fnecC5_raw_saltelli_summary.csv"
+    )
+
+    print(
+        "  data/derived/gsa/"
+        "sobol_fnecC10_raw_saltelli_summary.csv"
+    )
+
+    print()
+
+    print(
+        "Bounded robustness outputs:"
+    )
+
+    print(
+        "  data/derived/gsa/"
+        "sobol_fnecC5_bounded_saltelli_summary.csv"
+    )
+
+    print(
+        "  data/derived/gsa/"
+        "sobol_fnecC10_bounded_saltelli_summary.csv"
     )
 
 
@@ -305,6 +324,7 @@ def main(
 # ---------------------------------------------------------------------
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(
         description=(
             "Run all canonical Sobol global sensitivity analyses."
