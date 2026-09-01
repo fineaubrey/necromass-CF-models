@@ -86,7 +86,7 @@ GSA_DIR = (
 ANALYSES = [
     {
         "label": "CFB",
-        "module": "scripts.Python.sobol_cfb",
+        "module": "Scripts.Python.sobol_cfb",
         "default_n": 4096,
         "summaries": [
             "sobol_CFB_saltelli_summary.csv",
@@ -94,7 +94,7 @@ ANALYSES = [
     },
     {
         "label": "CFF",
-        "module": "scripts.Python.sobol_cff",
+        "module": "Scripts.Python.sobol_cff",
         "default_n": 4096,
         "summaries": [
             "sobol_CFF_saltelli_summary.csv",
@@ -102,7 +102,7 @@ ANALYSES = [
     },
     {
         "label": "NF",
-        "module": "scripts.Python.sobol_nf",
+        "module": "Scripts.Python.sobol_nf",
         "default_n": 4096,
         "summaries": [
             "sobol_NF_saltelli_summary.csv",
@@ -110,7 +110,7 @@ ANALYSES = [
     },
     {
         "label": "Composite fnecC",
-        "module": "scripts.Python.sobol_fnecC5_saltelli",
+        "module": "Scripts.Python.sobol_fnecC5_saltelli",
         "default_n": 4096,
         "summaries": [
             "sobol_fnecC5_raw_saltelli_summary.csv",
@@ -119,7 +119,7 @@ ANALYSES = [
     },
     {
         "label": "Trait-resolved fnecC",
-        "module": "scripts.Python.sobol_fnecC10_saltelli",
+        "module": "Scripts.Python.sobol_fnecC10_saltelli",
         "default_n": 8192,
         "summaries": [
             "sobol_fnecC10_raw_saltelli_summary.csv",

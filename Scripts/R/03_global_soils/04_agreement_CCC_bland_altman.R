@@ -59,9 +59,10 @@ suppressPackageStartupMessages({
 
 source(
   here::here(
-    "analysis",
+    "Scripts",
     "R",
-    "01_setup.R"
+    "01_traits",
+    "00_setup.R"
   )
 )
 

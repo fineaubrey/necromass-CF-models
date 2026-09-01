@@ -31,7 +31,14 @@ suppressPackageStartupMessages({
   library(here)
 })
 
-
+source(
+  here::here(
+    "Scripts",
+    "R",
+    "01_traits",
+    "00_setup.R"
+  )
+)
 
 gsa_dir <- here::here(
   "data",

@@ -21,7 +21,7 @@ Desktop.ini
 .RData
 .Ruserdata
 .Rproj.user/
-
+.Rplots.pdf
 # renv local library/cache should not be committed.
 # Commit renv.lock and renv/activate.R when renv is enabled.
 renv/library/
