@@ -1,4 +1,4 @@
-# Necromass Conversion-Factor Models
+# Necromass Conversion Factor Models
 
 Reproducible analysis code for the manuscript:
 
