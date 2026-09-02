@@ -244,6 +244,45 @@ if soils.empty:
         "No positive, finite soil observations remain after cleaning."
     )
 
+from scipy import stats
+
+def fit_lognorm_params(x):
+    """Estimate lognormal parameters from positive observations."""
+    x = np.asarray(x, dtype=float)
+    x = x[np.isfinite(x) & (x > 0)]
+
+    log_x = np.log(x)
+
+    return (
+        float(log_x.mean()),
+        float(log_x.std(ddof=1)),
+    )
+
+# Fit MS and GS on all positive observations
+ms_meanlog, ms_sdlog = fit_lognorm_params(soils["MS"].to_numpy())
+gs_meanlog, gs_sdlog = fit_lognorm_params(soils["GS"].to_numpy())
+
+# Fit S using a gamma distribution with location fixed at zero
+S_shape, _, S_scale = stats.gamma.fit(
+    soils["S"].to_numpy(dtype=float),
+    floc=0,
+)
+
+_ms_dist = stats.lognorm(
+    s=ms_sdlog,
+    scale=np.exp(ms_meanlog),
+)
+
+_gs_dist = stats.lognorm(
+    s=gs_sdlog,
+    scale=np.exp(gs_meanlog),
+)
+
+_s_dist = stats.gamma(
+    a=S_shape,
+    loc=0,
+    scale=S_scale,
+)
 
 # =====================================================================
 # 4. Empirical trait quantile functions
@@ -372,15 +411,9 @@ S_HI = float(soils["S"].max())
 
 
 def q_truncated(u, dist, lo, hi):
-    """Inverse-CDF mapping for a fitted distribution truncated to [lo, hi]."""
-    u = np.asarray(u, dtype=float)
-    u = np.clip(u, 1e-12, 1.0 - 1e-12)
-
     f_lo = dist.cdf(lo)
     f_hi = dist.cdf(hi)
-
     u_adj = f_lo + u * (f_hi - f_lo)
-
     return dist.ppf(u_adj)
 
 
